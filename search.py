@@ -20,12 +20,8 @@ r = requests.get(
     "http://api.petfinder.com/pet.find?",
     params=payload)
 
-# open and parse static dataset: with open("sample.json") as dataset: 
-
 
 my_dict = xmltodict.parse(r.text)
-
-# doc = json.dumps(my_dict)
 
 
 def is_possible_sibling(text):
@@ -47,6 +43,7 @@ def is_possible_sibling(text):
 
 def possible_friend_name(phrase):
 	# Identify possible name of friend or sibling from description or name.
+	# Disregard root pet name.
 
 
 	pass
@@ -59,7 +56,6 @@ def all_pet_results(pet_dict):
 			# print "+++++++++++++++++++", pet['id'], "++++++++++++++++"
 			if is_possible_sibling(pet['name']) is True:
 				pet_names[pet['name']] = []
-		
 				# if possible_friend_name(pet['name']) is True:
 				# 	print "I might have a friend"
 
