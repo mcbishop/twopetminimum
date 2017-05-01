@@ -14,6 +14,8 @@ secret = os.environ['PETFINDER_SECRET']
 
 payload = {'key':key, 'animal':'cat', 'location':'94110', 'count': 1000, 'offset': 100}
 
+SEARCH_TERMS = ["and","&","brother","sister","sibling","bonded","buddy","pair"]
+
 # Send request to API and parse returned data
 
 r = requests.get(
@@ -28,17 +30,10 @@ def is_possible_sibling(text):
 	# Identify if pet description contains mention of potential sibling or friend.
 	text_list = text.split()
 	for word in text_list:
-		if ("and" in word.lower()
-		    or "&"  in word.lower()
-		    or "brother" in word.lower() 
-			or "sister" in word.lower()
-			or "sibling"  in word.lower()
-			or "bonded"  in word.lower()
-			or "buddy"  in word.lower()
-			or "pair"  in word.lower()
-				):
-			print "############## FOUND ####################"
-			return True
+		for search_word in SEARCH_TERMS:
+			if word.lower() == search_word:
+				print "############## FOUND ####################"
+				return True
 
 
 def possible_friend_name(phrase):
