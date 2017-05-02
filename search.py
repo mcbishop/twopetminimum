@@ -12,18 +12,20 @@ import pprint
 key = os.environ['PETFINDER_KEY']
 secret = os.environ['PETFINDER_SECRET']
 
-payload = {'key':key, 'animal':'cat', 'location':'94110', 'count': 1000, 'offset': 100}
-
-SEARCH_TERMS = ["and","&","brother","sister","sibling","bonded","buddy","pair"]
-
-# Send request to API and parse returned data
-
-r = requests.get(
-    "http://api.petfinder.com/pet.find?",
-    params=payload)
 
 
-my_dict = xmltodict.parse(r.text)
+def get_current_pets(terms):
+	""" Send request to API return dictionary of pet search results"""
+
+
+	r = requests.get(
+	    "http://api.petfinder.com/pet.find?",
+	    params=payload)
+
+
+	pet_dict = xmltodict.parse(r.text)
+
+	return pet_dict
 
 
 def is_possible_sibling(text):
@@ -58,10 +60,7 @@ def all_pet_results(pet_dict):
 				# print pet
 				
 		print len(pet_names)
-		print pet_names
-
-all_pet_results(my_dict)
-
+		return pet_names
 
 
 def find_friend(name, pet_dict):
@@ -87,3 +86,12 @@ def is_affectionate(description):
 def affection_rating(description):
 	# sentiment analysis 
 	pass
+
+
+payload = {'key':key, 'animal':'cat', 'location':'94110', 'count': 1000, 'offset': 100}
+
+SEARCH_TERMS = ["and","&","brother","sister","sibling","bonded","buddy","pair"]
+pet_dict = get_current_pets(payload)
+print all_pet_results(pet_dict)
+
+
