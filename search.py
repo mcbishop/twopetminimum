@@ -30,10 +30,10 @@ def is_possible_sibling(text):
 	# Identify if pet description contains mention of potential sibling or friend.
 	text_list = text.split()
 	for word in text_list:
-		for search_word in SEARCH_TERMS:
-			if word.lower() == search_word:
-				print "############## FOUND ####################"
-				return True
+		word = word.lower()
+		if word in SEARCH_TERMS:
+			print "############## FOUND ####################"
+			return True
 
 
 def possible_friend_name(phrase):
