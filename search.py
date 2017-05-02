@@ -55,26 +55,24 @@ def find_friend(name, pet_dict):
     pass
 
 
-def dedupe_results(text):
-    # Dedupe set of results as shelters list same two pets in different order.
-    pass
+def is_affectionate(affection_phrases, text):
+    """Input: origin text, affection phrases; output: boolean."""
+    text_list = text.split()
+    for word in text_list:
+        word = word.lower()
+        if word in affection_phrases:
+            return True
 
 
-def is_affectionate(description):
-    # check phrase for snuggle words
-    # for word in description:
-    #   if ("lap" or "snuggle" or "hug"):
-        # for each word, assign a point, sum will equal affection rating
-    pass
-
-
-def affection_rating(description):
-    # sentiment analysis
+def affectionate_pets():
+    """ Input: dictionary of pets, output: pet names and descriptions of
+    affectionate pets."""
     pass
 
 
 test_search_terms = {'key': key, 'animal': 'cat', 'location': '94110', 'count': 1000, 'offset': 100}
 pair_phrases = ["and", "&", "brother", "sister", "sibling", "bonded", "buddy", "pair"]
+affection_phrases = ["snuggle", "cuddly", "lap", "hug", "affectionate", "friendly", ]
 current_pets = get_current_pets(test_search_terms)
 print all_pet_results(current_pets, pair_phrases)
 
