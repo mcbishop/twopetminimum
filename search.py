@@ -26,19 +26,22 @@ r = requests.get(
 my_dict = xmltodict.parse(r.text)
 
 
-def is_possible_sibling(pet_name):
-	# Identify if pet name contains mention of potential sibling or friend.
+def is_possible_sibling(text):
+	# Identify if pet description contains mention of potential sibling or friend.
 	text_list = text.split()
 	for word in text_list:
 		word = word.lower()
-		if word in SEARCH_TERMS:
-			return True
-		return False
+		for search_word in SEARCH_TERMS:
+			if word == search_word:
+				print "############## FOUND ####################"
+				return True
 
 
 def possible_friend_name(phrase):
 	# Identify possible name of friend or sibling from description or name.
 	# Disregard root pet name.
+
+
 	pass
 
 def all_pet_results(pet_dict):
@@ -47,15 +50,15 @@ def all_pet_results(pet_dict):
 		for pet in pet_dict:
 			# print pet['name']
 			# print "+++++++++++++++++++", pet['id'], "++++++++++++++++"
-			if is_possible_sibling(pet['name']):
+			if is_possible_sibling(pet['name']) is True:
 				pet_names[pet['name']] = []
 				# if possible_friend_name(pet['name']) is True:
 				# 	print "I might have a friend"
 
 				# print pet
 				
-		print "Number of found pets is {}".format(len(pet_names))
-		return pet_names
+		print len(pet_names)
+		print pet_names
 
 all_pet_results(my_dict)
 
