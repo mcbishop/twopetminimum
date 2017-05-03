@@ -61,7 +61,7 @@ def find_friend(name, pet_dict):
 
 def is_affectionate(text):
     """Input: origin text; output: boolean."""
-    affection_phrases = ["snuggle", "cuddly", "lap", "hug", "affectionate", "friendly"]
+    affection_phrases = ["snuggle", "cuddly", "lap", "hug", "affectionate", "friendly", "biscuits", "muffins"]
     text_list = text.split()
     for word in text_list:
         word = word.lower()
@@ -69,10 +69,30 @@ def is_affectionate(text):
             return True
 
 
+def word_frequency(all_pets):
+    """Input: dictionary including subdictionary for each pet, output: word frequency in descriptions."""
+    word_counts = {}
+    for pet_dict in all_pets['petfinder']['pets'].values():
+        for pet in pet_dict:
+            if pet['description']:
+                for word in pet['description'].split():
+                    if not word.isdigit():
+                        word = word.encode('utf-8').lower()
+                        word = word.strip("!-,?.;()")
+                        word_counts[word] = word_counts.get(word, 0)+1
+    return word_counts
 
-def word_frequency(blob):
-    """Input: blob, output: word frequency."""
-    pass
+
+def top_words(word_counts):
+    """ Input: dictionary of words and counts. Output: list of top words, sorted by value."""
+    all_values = {}
+    for key, value in word_counts.items():
+        if value not in all_values:
+            all_values[value] = [key]
+        else:
+            all_values[value].append(key)
+    print all_values
+
 
 def affectionate_pets():
     """ Input: dictionary of pets, output: pet names and descriptions of
@@ -85,6 +105,11 @@ pair_phrases = ["and", "&", "brother", "sister", "sibling", "bonded", "buddy", "
 
 current_pets = get_current_pets(test_search_terms)
 
-print all_pet_results(current_pets, pair_phrases)
+pet_dict = all_pet_results(current_pets, pair_phrases)
+
+freq_dict = word_frequency(current_pets)
+print freq_dict
+
+top_words(freq_dict)
 
 
