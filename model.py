@@ -15,16 +15,16 @@ def connect_to_db(app):
     db.init_app(app)
 
 
-# class Shelter(db.Model):
-#     """A Shelter table. One shelter contains many Pets."""
+class Shelter(db.Model):
+    """A Shelter table. One shelter contains many Pets."""
 
-#     __tablename__ = 'shelters'
+    __tablename__ = 'shelters'
 
-#     shelter_id = db.Column(db.String(20), primary_key=True)
-#     shelter_name = db.Column(db.String(100))
+    shelter_id = db.Column(db.String(20), primary_key=True)
+    shelter_name = db.Column(db.String(100))
 
-#     def __repr__(self):
-#         print "< Shelter name = {} ".format(self.name)
+    def __repr__(self):
+        print "< Shelter name = {} ".format(self.name)
 
 
 class Pet(db.Model):
@@ -33,15 +33,15 @@ class Pet(db.Model):
     __tablename__ = 'pets'
 
     pet_id = db.Column(db.Integer, primary_key=True)
-    shelter_id = db.Column(db.String(20))
-    # db.ForeignKey('shelters.shelter_id'))
+    shelter_id = db.Column(db.String(20), 
+                           db.ForeignKey('shelters.shelter_id'))
     pet_name = db.Column(db.String(100))
     pet_description = db.Column(db.Text)
 
     photo_url = db.Column(db.String(200))
     pet_type = db.Column(db.String(50))
 
-    # shelter = db.relationship('Shelter', backref='pets')
+    shelter = db.relationship('Shelter', backref='pets')
 
     def __repr__(self):
         return "<Pet name =  {} >".format(self.name)

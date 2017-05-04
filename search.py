@@ -22,8 +22,30 @@ def get_current_pets(payload):
     return pet_dict
 
 
+def get_current_shelters(payload):
+    """Send request to API and return dictionary of nearby shelter search results."""
+
+    r = requests.get(
+        "http://api.petfinder.com/shelter.find?",
+        params=payload)
+
+    shelter_dict = xmltodict.parse(r.text)
+    return shelter_dict
+
+
+def get_shelter_pets(payload):
+    """Send request to API and return shelter-specific dictionary of pets."""
+
+    r = requests.get(
+        "http://api.petfinder.com/shelter.getPets?",
+        params=payload)
+
+    shelterpets_dict = xmltodict.parse(r.text)
+    return shelterpets_dict
+
+
 def is_possible_sibling(text, phrases):
-    # Identify if pet description contains mention of potential sibling or friend.
+    """Identify if pet name contains mention of potential sibling or friend."""
     text_list = text.split()
     for word in text_list:
         word = word.lower()
@@ -100,15 +122,38 @@ def affectionate_pets():
     pass
 
 
+def write_desc(all_pets):
+    """Input: dictionary including subdictionary for each pet. Side effect: File 
+    including descriptions as one long string. Output: None."""
+
+    with open("descriptions.txt", "w") as f:
+        for pet_dict in all_pets['petfinder']['pets'].values():
+            for pet in pet_dict:
+                if pet['description']:
+                    list_desc = pet['description']
+                    for word in list_desc:
+                        if not word.isdigit():
+                            if not word.startswith("http"):
+                                if not word.startswith("https"):
+                                    word = word.encode('utf-8').lower()
+                                    word = word.strip("!-,?.;()")
+                                    f.write(" ".join(word))
+                                 
+
+
+
+
+
+
 test_search_terms = {'key': key, 'animal': 'cat', 'location': '94110', 'count': 1000, 'offset': 100}
 pair_phrases = ["and", "&", "brother", "sister", "sibling", "bonded", "buddy", "pair"]
 
-current_pets = get_current_pets(test_search_terms)
+# current_pets = get_current_pets(test_search_terms)
 
-pet_dict = all_pet_results(current_pets, pair_phrases)
+# pet_dict = all_pet_results(current_pets, pair_phrases)
 
-freq_dict = word_frequency(current_pets)
+# freq_dict = word_frequency(current_pets)
 
-top_words(freq_dict)
+# top_words(freq_dict)
 
 

@@ -1,4 +1,4 @@
-from model import Pet, connect_to_db, db
+from model import Pet, Shelter, connect_to_db, db
 import search
 import os
 import requests
@@ -11,25 +11,32 @@ secret = os.environ['PETFINDER_SECRET']
 
 
 def create_shelter_object(shelter):
-    # Take shelter attributes out of dictionary content and instantiate a Shelter object.
-    pass
+    """Take shelter attributes out of dictionary content and instantiate a Shelter object."""
+    new_shelter = Shelter(shelter_id=shelter['id'],
+                          shelter_name=shelter['name'])
+    return new_shelter
 
 
 def create_pet_object(pet_entry):
-    # Take pet attributes out of dictionary content and instantiate a Pet object.
+    """ Take pet attributes out of dictionary content and instantiate a Pet object."""
     new_pet = Pet(shelter_id=pet_entry['shelterId'], 
                   pet_name=pet_entry['name'], 
                   pet_description=pet_entry['description'],
                   pet_type=pet_entry['animal'])
     return new_pet
 
-# def add_possible_object(shelter, pets):  
-#     def load_shelters():
-#         pass
 
+def load_shelters(all_shelters):
+    """Get shelter data for nearby shelters from dictionary. Add shelters to db."""
+    for shelter_dict in all_shelters['petfinder']['shelters']['shelter']:
+        new_shelter = create_shelter_object(shelter_dict)
+        db.session.add(new_shelter)
+
+    db.session.commit()
 
 
 def load_pets(all_pets):
+    """ Validate sibling mention in pet names. Load responsive pets into database."""
     pair_phrases = ["and", "&", "brother", "sister", "sibling", "bonded", "buddy", "pair"]
     for pet_dict in all_pets['petfinder']['pets'].values():
         for pet in pet_dict:
@@ -41,9 +48,15 @@ def load_pets(all_pets):
     db.session.commit()
 
 
-test_search_terms = {'key': key, 'animal': 'cat', 'location': '94110', 'count': 1000, 'offset': 100}
+pet_search_terms = {'key': key, 'animal': 'cat', 'location': '94110', 'count': 1000, 'offset': 100}
+
+shelter_search_terms = {'key': key, 'location': '94110', 'count': 1000, 'offset': 100}
+
+current_shelters = search.get_current_shelters(shelter_search_terms)
+
+print current_shelters
+
+# current_pets = search.get_current_pets(pet_search_terms)
 
 
-current_pets = search.get_current_pets(test_search_terms)
-
-load_pets(current_pets)
+# load_pets(current_pets)
