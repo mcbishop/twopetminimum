@@ -24,7 +24,7 @@ class Shelter(db.Model):
     shelter_name = db.Column(db.String(100))
 
     def __repr__(self):
-        print "< Shelter name = {} ".format(self.name)
+        return "< Shelter name = {} >".format(self.shelter_name.encode('ascii', 'ignore').decode('ascii'))
 
 
 class Pet(db.Model):
@@ -44,7 +44,7 @@ class Pet(db.Model):
     shelter = db.relationship('Shelter', backref='pets')
 
     def __repr__(self):
-        return "<Pet name =  {} >".format(self.name)
+        return "<Pet name =  {} >".format(self.pet_name.encode('ascii', 'ignore').decode('ascii'))
 
 
 app = Flask(__name__)

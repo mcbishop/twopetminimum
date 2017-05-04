@@ -13,16 +13,16 @@ secret = os.environ['PETFINDER_SECRET']
 def create_shelter_object(shelter):
     """Take shelter attributes out of dictionary content and instantiate a Shelter object."""
     new_shelter = Shelter(shelter_id=shelter['id'],
-                          shelter_name=shelter['name'])
+                          shelter_name=shelter['name'].encode('utf-8'))
     return new_shelter
 
 
 def create_pet_object(pet_entry):
     """ Take pet attributes out of dictionary content and instantiate a Pet object."""
     new_pet = Pet(shelter_id=pet_entry['shelterId'], 
-                  pet_name=pet_entry['name'], 
-                  pet_description=pet_entry['description'],
-                  pet_type=pet_entry['animal'])
+                  pet_name=pet_entry['name'].encode('utf-8'), 
+                  pet_description=pet_entry['description'].encode('utf-8'),
+                  pet_type=pet_entry['animal'].encode('utf-8'))
     return new_pet
 
 
@@ -33,6 +33,7 @@ def load_shelters(all_shelters):
         db.session.add(new_shelter)
 
     db.session.commit()
+    print "Loaded Shelters."
 
 
 def load_pets(all_pets):
@@ -46,17 +47,18 @@ def load_pets(all_pets):
                 db.session.add(new_pet)
 
     db.session.commit()
+    print "Loaded Pets."
 
 
-pet_search_terms = {'key': key, 'animal': 'cat', 'location': '94110', 'count': 1000, 'offset': 100}
+def seed_database():
+    pet_search_terms = {'key': key, 'animal': 'cat', 'location': '94110', 'count': 1000, 'offset': 100}
 
-shelter_search_terms = {'key': key, 'location': '94110', 'count': 1000, 'offset': 100}
+    shelter_search_terms = {'key': key, 'location': '94110', 'count': 1000, 'offset': 100}
 
-current_shelters = search.get_current_shelters(shelter_search_terms)
+    current_shelters = search.get_current_shelters(shelter_search_terms)
 
-print current_shelters
+    current_pets = search.get_current_pets(pet_search_terms)
 
-# current_pets = search.get_current_pets(pet_search_terms)
+    load_shelters(current_shelters)
 
-
-# load_pets(current_pets)
+    load_pets(current_pets)
