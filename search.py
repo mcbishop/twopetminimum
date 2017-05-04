@@ -61,7 +61,7 @@ def find_friend(name, pet_dict):
 
 def is_affectionate(text):
     """Input: origin text; output: boolean."""
-    affection_phrases = ["snuggle", "cuddly", "lap", "hug", "affectionate", "friendly", "biscuits", "muffins"]
+    affection_phrases = ["snuggle", "cuddly", "lap", "hug", "affectionate", "friendly", "biscuits", "muffins", "purr", "head-butt", "kiss"]
     text_list = text.split()
     for word in text_list:
         word = word.lower()
@@ -91,7 +91,7 @@ def top_words(word_counts):
             all_values[value] = [key]
         else:
             all_values[value].append(key)
-    print all_values
+    return all_values
 
 
 def affectionate_pets():
@@ -108,7 +108,6 @@ current_pets = get_current_pets(test_search_terms)
 pet_dict = all_pet_results(current_pets, pair_phrases)
 
 freq_dict = word_frequency(current_pets)
-print freq_dict
 
 top_words(freq_dict)
 
