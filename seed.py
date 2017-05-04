@@ -1,4 +1,4 @@
-from model import Pet, Shelter, connect_to_db, db
+from model import Pet, Shelter, Photo, connect_to_db, db
 import search
 import os
 import requests
@@ -19,11 +19,22 @@ def create_shelter_object(shelter):
 
 def create_pet_object(pet_entry):
     """ Take pet attributes out of dictionary content and instantiate a Pet object."""
-    new_pet = Pet(shelter_id=pet_entry['shelterId'], 
+    new_pet = Pet(pet_id = pet_entry['id'],
+                  shelter_id=pet_entry['shelterId'], 
                   pet_name=pet_entry['name'].encode('utf-8'), 
                   pet_description=pet_entry['description'].encode('utf-8'),
                   pet_type=pet_entry['animal'].encode('utf-8'))
     return new_pet
+
+def create_photo_object(pet_entry, photo_entry):
+    """Take photo attributes out of pet mini-dictionary and instantiate a Photo object."""
+    
+    # Get pet ID out of database and store as foreign key.
+    new_photo = Photo(pet_id=pet_entry['id'],
+                      pf_id=photo_entry['@id'],
+                      photo_size=photo_entry['@size'],
+                      photo_text=photo_entry['#text'])
+    return new_photo
 
 
 def load_shelters(all_shelters):
@@ -44,10 +55,18 @@ def load_pets(all_pets):
             # If pet name includes possible sibling, make a dictionary entry
             if search.is_possible_sibling(pet['name'], pair_phrases):
                 new_pet = create_pet_object(pet)
+
+                # Load links to photos for each pet.
+                for photo_record in pet['media']['photos']['photo']:
+                    new_photo = create_photo_object(pet, photo_record)
+                    db.session.add(new_photo)
+
                 db.session.add(new_pet)
+
 
     db.session.commit()
     print "Loaded Pets."
+    print "Loaded Photos."
 
 
 def seed_database():

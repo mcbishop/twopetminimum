@@ -47,6 +47,23 @@ class Pet(db.Model):
         return "<Pet name =  {} >".format(self.pet_name.encode('ascii', 'ignore').decode('ascii'))
 
 
+class Photo(db.Model):
+    """A table for Pet photos. Each pet has many photos."""
+
+    __tablename__ = 'photos'
+
+    photo_id = db.Column(db.Integer, primary_key=True)
+    pet_id = db.Column(db.Integer, db. ForeignKey('pets.pet_id'))
+    pf_id = db.Column(db.String(5))
+    photo_size = db.Column(db.String(5))
+    photo_text = db.Column(db.String(200))
+
+    pet = db.relationship('Pet', backref='photos')
+
+    def __repr__(self):
+        return "<Photo ID = {} Text = {}".format(self.photo_id, 
+                                                 self.photo_text.encode('ascii', 'ignore').decode('ascii'))
+
 app = Flask(__name__)
 
 connect_to_db(app)
