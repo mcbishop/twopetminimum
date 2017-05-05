@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template
-
+from flask.ext.sqlalchemy import SQLAlchemy
+from model import Pet, Shelter, Photo, connect_to_db, db
 app = Flask(__name__)
 
 
@@ -14,9 +15,12 @@ def search():
     """Return search results."""
 
     # Query database for pets and shelters.
-    # Display pets on the page.
+    # Pass search results to page.
 
-    pass
+    pet_results = db.session.query(Pet).all()
+    print pet_results
+
+    return render_template("search.html", pet_results=pet_results)
 
 
 @app.route('/shelters')
@@ -28,3 +32,6 @@ def display_shelter_pets():
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')
+
+    connect_to_db(app)
+
