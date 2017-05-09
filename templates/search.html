@@ -8,10 +8,9 @@
 
      <p> {% for pet in pet_results: %}
             <li> {{ pet.pet_name }}
-              <li> {{pet.pet_description}}
-                {% for photo in pet.photos %}
-                <li> <img src="{{ photo.photo_text }}">
-                    {% endfor %}
+             <li> <img src="{{ pet.photo_text }}">
+             <li> {{ pet.pet_description}}
+
          {% endfor %}
         </p>
 

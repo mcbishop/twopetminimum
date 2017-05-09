@@ -17,7 +17,11 @@ def search():
     # Query database for pets and shelters.
     # Pass search results to page.
 
-    pet_results = db.session.query(Pet).all()
+    pet_results = db.session.query(Pet.pet_name, 
+                               Pet.pet_id,
+                               Pet.pet_description, 
+                               Photo.photo_text, 
+                               Photo.photo_size).join(Photo).filter(Photo.photo_size=='x').all()
     print pet_results
 
     return render_template("search.html", pet_results=pet_results)
