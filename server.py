@@ -19,7 +19,8 @@ def search():
 
     pet_results = db.session.query(Pet.pet_name, 
                                Pet.pet_id,
-                               Pet.pet_description, 
+                               Pet.pet_description,
+                               Pet.shelter_id, 
                                Photo.photo_text, 
                                Photo.photo_size).join(Photo).filter(Photo.photo_size=='x').all()
     print pet_results
@@ -29,7 +30,7 @@ def search():
 
 @app.route('/shelters')
 def display_shelter_pets():
-    """ Display d3 chart of pets in a given shelter."""
+    """ Display pets in a given shelter."""
 
     pass
 

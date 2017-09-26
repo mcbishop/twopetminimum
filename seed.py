@@ -55,13 +55,16 @@ def load_pets(all_pets):
             # If pet name includes possible sibling, make a dictionary entry
             if search.is_possible_sibling(pet['name'], pair_phrases):
                 new_pet = create_pet_object(pet)
-
-                # Load links to photos for each pet.
-                for photo_record in pet['media']['photos']['photo']:
-                    new_photo = create_photo_object(pet, photo_record)
-                    db.session.add(new_photo)
-
                 db.session.add(new_pet)
+            # If pet record contains photos, add a link to predetermined size photo.
+                if pet['media']:
+                    # Load links to photos for each pet.
+                    if pet['media']['photos']:
+                        for photo_record in pet['media']['photos']['photo']:
+                            new_photo = create_photo_object(pet, photo_record)
+                            db.session.add(new_photo)
+
+ 
 
 
     db.session.commit()
@@ -81,3 +84,5 @@ def seed_database():
     load_shelters(current_shelters)
 
     load_pets(current_pets)
+
+  
