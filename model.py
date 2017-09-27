@@ -40,6 +40,7 @@ class Pet(db.Model):
 
     photo_url = db.Column(db.String(200))
     pet_type = db.Column(db.String(50))
+    lastupdate = db.Column(db.DateTime)
 
     shelter = db.relationship('Shelter', backref='pets')
 

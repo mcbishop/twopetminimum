@@ -23,6 +23,7 @@ def create_pet_object(pet_entry):
                   shelter_id=pet_entry['shelterId'], 
                   pet_name=pet_entry['name'].encode('utf-8'), 
                   pet_description=pet_entry['description'].encode('utf-8'),
+                  lastupdate=pet_entry['lastUpdate'].encode('utf-8'), 
                   pet_type=pet_entry['animal'].encode('utf-8'))
     return new_pet
 
