@@ -33,8 +33,8 @@ class Pet(db.Model):
     __tablename__ = 'pets'
 
     pet_id = db.Column(db.Integer, primary_key=True)
-    shelter_id = db.Column(db.String(20), 
-                           db.ForeignKey('shelters.shelter_id'))
+    shelter_id = db.Column(db.String(20))
+                           # db.ForeignKey('shelters.shelter_id'))
     pet_name = db.Column(db.String(100))
     pet_description = db.Column(db.Text)
 
@@ -42,7 +42,7 @@ class Pet(db.Model):
     pet_type = db.Column(db.String(50))
     lastupdate = db.Column(db.DateTime)
 
-    shelter = db.relationship('Shelter', backref='pets')
+    # shelter = db.relationship('Shelter', backref='pets')
 
     def __repr__(self):
         return "<Pet name =  {} >".format(self.pet_name.encode('ascii', 'ignore').decode('ascii'))

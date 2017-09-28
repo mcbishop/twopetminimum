@@ -67,8 +67,8 @@ def all_pet_results(all_pets, phrases):
             if is_possible_sibling(pet['name'], phrases):
                 pet_names[pet['name']] = []
                 # If description includes affection keywords, append dictionary value
-                if is_affectionate(pet['description']):
-                    pet_names[pet['name']] = [pet['description']]  
+                # if is_affectionate(pet['description']):
+                pet_names[pet['name']] = [pet['description']]  
         print len(pet_names)
         return pet_names
 
@@ -146,7 +146,7 @@ def write_desc(all_pets):
 
 
 test_search_terms = {'key': key, 'animal': 'cat', 'location': '94110', 'count': 1000, 'offset': 100}
-pair_phrases = ["and", "&", "brother", "sister", "sibling", "bonded", "buddy", "pair"]
+pair_phrases = ["and", "&", "brother", "sister", "sibling", "bonded", "pair"]
 
 # current_pets = get_current_pets(test_search_terms)
 

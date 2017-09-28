@@ -74,9 +74,9 @@ def load_pets(all_pets):
 
 
 def seed_database():
-    pet_search_terms = {'key': key, 'animal': 'cat', 'location': '94110', 'count': 1000, 'offset': 100}
+    pet_search_terms = {'key': key, 'animal': 'cat', 'location': '94110', 'count': 1000}
 
-    shelter_search_terms = {'key': key, 'location': '94110', 'count': 1000, 'offset': 100}
+    shelter_search_terms = {'key': key, 'location': '94110', 'count': 1000}
 
     current_shelters = search.get_current_shelters(shelter_search_terms)
 

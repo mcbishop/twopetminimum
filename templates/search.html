@@ -16,17 +16,24 @@
         </div>
         </div>
     </div>
-    <div class="row">
+
             <div class="text">
+            <div class="row">
      <p> {% for pet in pet_results: %}
-            <li> {{ pet.pet_name }}
-            <div class="col-xs-12" >
-             <li> <img src="{{ pet.photo_text }}">
-             <li> {{ pet.pet_description}}
-            <li> {{ pet.shelter_id}}
+
+         {% if loop.first %}<div class="row">{% endif %}
+
+            <div class="col-xs-4" >
+             {{ pet.lastupdate }}
+             {{ pet.pet_name }}
+              <img class="img-responsive" style="width:100%" src="{{ pet.photo_text }}">
              </div>
+           {% if loop.index is divisibleby 3 %}</div><div class="row">{% endif %}
+         {% if loop.last %}</div>{% endif %}
+ 
          {% endfor %}
-     </div>
+        </div>
+
  </div>
 </div>
         </p>
