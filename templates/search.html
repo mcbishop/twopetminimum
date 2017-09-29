@@ -2,7 +2,7 @@
 <head>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <!-- Custom styles for this template -->
-    <link href="styles.css" rel="stylesheet">
+    <link href="/static/styles.css" rel="stylesheet">
 
     <title>Two Pet Minimum</title>
 </head>
@@ -24,9 +24,9 @@
          {% if loop.first %}<div class="row">{% endif %}
 
             <div class="col-xs-4" >
-             {{ pet.lastupdate }}
-             {{ pet.pet_name }}
               <img class="img-responsive" style="width:100%" src="{{ pet.photo_text }}">
+             {{ pet.lastupdate }}
+             <a href="/pet/{{ pet.pet_id }}"> {{ pet.pet_name }} </a>
              </div>
            {% if loop.index is divisibleby 3 %}</div><div class="row">{% endif %}
          {% if loop.last %}</div>{% endif %}
@@ -41,6 +41,6 @@
 
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!--     </div> -->
+
 </body>
 </html>

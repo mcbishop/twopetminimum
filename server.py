@@ -17,20 +17,34 @@ def search():
     # Query database for pets and shelters.
     # Pass search results to page.
 
-    #TODO: Bring back only one photo per pet.
     pet_results = db.session.query(Pet.pet_name, 
                                Pet.pet_id,
                                Pet.pet_description,
                                Pet.shelter_id, 
                                Pet.lastupdate,
                                Photo.photo_text, 
-                               Photo.photo_size).join(Photo).order_by(Pet.lastupdate.desc()).all()
-    print pet_results
+                               Photo.photo_size).join(Photo).all()
 
 
     #todo: get current date from python, query DB for lastupdate within a date range
 
     return render_template("search.html", pet_results=pet_results)
+
+
+@app.route('/pet/<pet_id>')
+def display_pet(pet_id):
+    """ Display individual pet."""
+
+    pet = db.session.query(Pet.pet_name, 
+                        Pet.pet_id,
+                        Pet.pet_description,
+                        Pet.shelter_id, 
+                        Pet.lastupdate,
+                        Photo.photo_text, 
+                        Photo.photo_size).join(Photo).filter(Pet.pet_id==pet_id).one()
+
+
+    return render_template("profile.html", pet=pet)
 
 
 @app.route('/shelters')
