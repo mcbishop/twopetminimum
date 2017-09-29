@@ -22,6 +22,12 @@ def get_current_pets(payload):
     return pet_dict
 
 
+def get_pet(payload):
+    """ Send request to API and return dictionary of data for one pet."""
+
+    pass
+    
+
 def get_current_shelters(payload):
     """Send request to API and return dictionary of nearby shelter search results."""
 

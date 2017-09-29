@@ -31,17 +31,11 @@ def search():
     return render_template("search.html", pet_results=pet_results)
 
 
-@app.route('/pet/<pet_id>')
+@app.route('/pet/<int:pet_id>')
 def display_pet(pet_id):
     """ Display individual pet."""
 
-    pet = db.session.query(Pet.pet_name, 
-                        Pet.pet_id,
-                        Pet.pet_description,
-                        Pet.shelter_id, 
-                        Pet.lastupdate,
-                        Photo.photo_text, 
-                        Photo.photo_size).join(Photo).filter(Pet.pet_id==pet_id).one()
+    pet = db.session.query(Pet).join(Photo).filter(Pet.pet_id==pet_id).one()
 
 
     return render_template("profile.html", pet=pet)

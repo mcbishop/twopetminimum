@@ -37,12 +37,12 @@ class Pet(db.Model):
                            # db.ForeignKey('shelters.shelter_id'))
     pet_name = db.Column(db.String(100))
     pet_description = db.Column(db.Text)
-
-    photo_url = db.Column(db.String(200))
     pet_type = db.Column(db.String(50))
     lastupdate = db.Column(db.DateTime)
 
     # shelter = db.relationship('Shelter', backref='pets')
+
+    photo = db.relationship('Photo', backref="pets")
 
     def __repr__(self):
         return "<Pet name =  {} >".format(self.pet_name.encode('ascii', 'ignore').decode('ascii'))
