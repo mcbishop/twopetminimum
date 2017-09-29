@@ -31,11 +31,12 @@ def create_photo_object(pet_entry, photo_entry):
     """Take photo attributes out of pet mini-dictionary and instantiate a Photo object."""
     
     # Get pet ID out of database and store as foreign key.
+  
     new_photo = Photo(pet_id=pet_entry['id'],
                       pf_id=photo_entry['@id'],
                       photo_size=photo_entry['@size'],
                       photo_text=photo_entry['#text'])
-    return new_photo
+    db.session.add(new_photo)
 
 
 def load_shelters(all_shelters):
@@ -59,11 +60,14 @@ def load_pets(all_pets):
                 db.session.add(new_pet)
             # If pet record contains photos, add a link to predetermined size photo.
                 if pet['media']:
-                    # Load links to photos for each pet.
-                    if pet['media']['photos']:
+                    # Load links to one "l" photo for each pet.
+                    if pet['media']['photos']['photo']:
+                        photo_exists = False
                         for photo_record in pet['media']['photos']['photo']:
-                            new_photo = create_photo_object(pet, photo_record)
-                            db.session.add(new_photo)
+                            if photo_record['@size'] == 'x':
+                                if photo_exists == False:
+                                    new_photo = create_photo_object(pet, photo_record)
+                                    photo_exists = True
 
  
 

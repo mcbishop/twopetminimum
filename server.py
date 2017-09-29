@@ -24,8 +24,9 @@ def search():
                                Pet.shelter_id, 
                                Pet.lastupdate,
                                Photo.photo_text, 
-                               Photo.photo_size).join(Photo).filter(Photo.photo_size=='x').order_by(Pet.lastupdate.desc()).all()
+                               Photo.photo_size).join(Photo).order_by(Pet.lastupdate.desc()).all()
     print pet_results
+
 
     #todo: get current date from python, query DB for lastupdate within a date range
 
@@ -37,6 +38,7 @@ def display_shelter_pets():
     """ Display pets in a given shelter."""
 
     pass
+
 
 
 if __name__ == "__main__":
