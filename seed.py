@@ -51,7 +51,7 @@ def load_shelters(all_shelters):
 
 def load_pets(all_pets):
     """ Validate sibling mention in pet names. Load responsive pets into database."""
-    pair_phrases = ["and", "&", "brother", "sister", "sibling", "bonded", "buddy", "pair"]
+    pair_phrases = ["and", "&", "brother", "sister", "sibling", "bonded", "pair"]
     for pet_dict in all_pets['petfinder']['pets'].values():
         for pet in pet_dict:
             # If pet name includes possible sibling, make a dictionary entry
