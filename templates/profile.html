@@ -1,0 +1,45 @@
+<html>
+<head>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+    <!-- Custom styles for this template -->
+    <link href="/static/styles.css" rel="stylesheet">
+
+    <title>Two Pet Minimum</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+    <div class="col-xs-12">
+        <div class="page-header">
+        <h1>{{pet.pet_name}} </h1>
+     </div>
+        </div>
+        </div>
+    </div>
+
+            <div class="text">
+            <div class="row">
+
+            <div class="col-xs-4" >
+                {% for photo in pet.photo: %}
+              <img class="img-responsive" style="width:100%" src="{{ photo.photo_text }}">
+              {% endfor %}
+             {{ pet.lastupdate }}
+             {{ pet.pet_name }}
+             {{ pet.pet_description}}
+             {{ pet.shelter_id}}
+ 
+             </div>
+
+        </div>
+
+ </div>
+</div>
+        </p>
+
+
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!--     </div> -->
+</body>
+</html>
