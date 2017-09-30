@@ -25,7 +25,7 @@ def create_pet_object(pet_entry):
                   pet_description=pet_entry['description'].encode('utf-8'),
                   lastupdate=pet_entry['lastUpdate'].encode('utf-8'), 
                   pet_type=pet_entry['animal'].encode('utf-8'))
-    return new_pet
+    db.session.add(new_pet)
 
 def create_photo_object(pet_entry, photo_entry):
     """Take photo attributes out of pet mini-dictionary and instantiate a Photo object."""
@@ -71,10 +71,16 @@ def load_pets(all_pets):
 
  
 
+def get_api_pet(pet_id):
+    """ Query the API for more info about a given pet."""
 
-    db.session.commit()
-    print "Loaded Pets."
-    print "Loaded Photos."
+    # Payload for requests library
+    pet_search_terms = {'key': key, 'id': pet_id}
+
+    # Send payload to Petfinder API. Helper function returns a dictionary.
+    current_pet = search.get_pet(pet_search_terms)
+
+    return current_pet
 
 
 def seed_database():

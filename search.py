@@ -25,8 +25,13 @@ def get_current_pets(payload):
 def get_pet(payload):
     """ Send request to API and return dictionary of data for one pet."""
 
-    pass
-    
+    r = requests.get(
+        "http://api.petfinder.com/pet.get?",
+        params=payload)
+
+    pet_dict = xmltodict.parse(r.text)
+    return pet_dict
+
 
 def get_current_shelters(payload):
     """Send request to API and return dictionary of nearby shelter search results."""

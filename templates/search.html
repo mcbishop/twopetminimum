@@ -24,9 +24,9 @@
          {% if loop.first %}<div class="row">{% endif %}
 
             <div class="col-xs-4" >
-              <img class="img-responsive" style="width:100%" src="{{ pet.photo_text }}">
+              <a href="/pet/{{ pet.pet_id }}"> <img class="img-responsive" style="width:100%" src="{{ pet.photo_text }}"></a>
              {{ pet.lastupdate }}
-             <a href="/pet/{{ pet.pet_id }}"> {{ pet.pet_name }} </a>
+             {{ pet.pet_name }} 
              </div>
            {% if loop.index is divisibleby 3 %}</div><div class="row">{% endif %}
          {% if loop.last %}</div>{% endif %}

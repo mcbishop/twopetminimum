@@ -21,13 +21,21 @@
             <div class="row">
 
             <div class="col-xs-4" >
-                {% for photo in pet.photo: %}
-              <img class="img-responsive" style="width:100%" src="{{ photo.photo_text }}">
+                {% for photo in pet['media']['photos']['photo'] %}
+                {% if photo['@size'] == 'x' %}
+              <img class="img-responsive" style="width:100%" src="{{ photo['#text'] }}">
+              {% endif %}
               {% endfor %}
-             {{ pet.lastupdate }}
-             {{ pet.pet_name }}
-             {{ pet.pet_description}}
-             {{ pet.shelter_id}}
+
+             {{ pet['name'] }} <br>
+             {{ pet['lastupdate'] }}<br>
+             {% for breed in pet['breeds']['breed'] %}
+             <li> {{ breed }}<br>
+             {% endfor %}
+             Age: {{ pet['age']}}<br>
+             Gender: {{ pet['sex']}}<br>
+             Size: {{ pet['size']}}<br>
+              {{ pet['description']}}<br>
  
              </div>
 

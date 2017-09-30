@@ -1,6 +1,8 @@
 from flask import Flask, request, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
 from model import Pet, Shelter, Photo, connect_to_db, db
+import seed
+
 app = Flask(__name__)
 
 
@@ -35,8 +37,11 @@ def search():
 def display_pet(pet_id):
     """ Display individual pet."""
 
-    pet = db.session.query(Pet).join(Photo).filter(Pet.pet_id==pet_id).one()
+    pet = seed.get_api_pet(pet_id)
 
+    pet = pet['petfinder']['pet']
+
+    print pet.keys()
 
     return render_template("profile.html", pet=pet)
 
