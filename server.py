@@ -1,7 +1,8 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 from flask.ext.sqlalchemy import SQLAlchemy
 from model import Pet, Shelter, Photo, connect_to_db, db
 import seed
+import json
 
 app = Flask(__name__)
 
@@ -44,6 +45,20 @@ def display_pet(pet_id):
     print pet.keys()
 
     return render_template("profile.html", pet=pet)
+
+
+@app.route('/pet.json')
+def display_pet_json():
+    """ Display individual pet in json format. For AJAX use."""
+    pet_id = request.args.get("pet_id")
+    print "****************"
+    print pet_id
+    print "****************"
+    pet = seed.get_api_pet(pet_id)
+
+    pet = pet['petfinder']['pet']
+
+    return jsonify(pet)
 
 
 @app.route('/shelters')

@@ -24,9 +24,11 @@
          {% if loop.first %}<div class="row">{% endif %}
 
             <div class="col-xs-4" >
-              <a href="/pet/{{ pet.pet_id }}"> <img class="img-responsive" style="width:100%" src="{{ pet.photo_text }}"></a>
+              <div class="pet_image"> <a href="/pet/{{ pet.pet_id }}"> 
+                <img class="img-responsive" id={{ pet.pet_id }} style="width:100%" src="{{ pet.photo_text }}"></a></div>
              {{ pet.lastupdate }}
              {{ pet.pet_name }} 
+             <div class="description"></div>
              </div>
            {% if loop.index is divisibleby 3 %}</div><div class="row">{% endif %}
          {% if loop.last %}</div>{% endif %}
@@ -41,6 +43,26 @@
 
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+
+
+function showPetInfo(results) {
+    var pet_id = results.pet_id;
+    console.dir(results); // yay debugging!
+    $('#' + pet_id).html(results['description']);
+}
+
+function getPetInfo(evt) {
+    var pet_id = this.pet_id;
+    console.log(pet_id)
+
+    $.get("/pet.json", {'pet_id':pet_id},
+        showPetInfo);
+}
+
+$('.pet_image').hover(getPetInfo);
+
+</script>
 
 </body>
 </html>
