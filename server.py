@@ -51,12 +51,18 @@ def display_pet(pet_id):
 def display_pet_json():
     """ Display individual pet in json format. For AJAX use."""
     pet_id = request.args.get("pet_id")
+
+    if pet_id is None:
+        pet_id = "38921558"
     print "****************"
     print pet_id
     print "****************"
     pet = seed.get_api_pet(pet_id)
 
     pet = pet['petfinder']['pet']
+    print "#########################"
+    print pet
+    print "#########################"
 
     return jsonify(pet)
 
