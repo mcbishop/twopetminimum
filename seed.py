@@ -14,6 +14,7 @@ def create_shelter_object(shelter):
     """Take shelter attributes out of dictionary content and instantiate a Shelter object."""
     new_shelter = Shelter(shelter_id=shelter['id'],
                           shelter_name=shelter['name'].encode('utf-8'))
+    db.session.add(new_shelter)
     return new_shelter
 
 
@@ -26,6 +27,7 @@ def create_pet_object(pet_entry):
                   lastupdate=pet_entry['lastUpdate'].encode('utf-8'), 
                   pet_type=pet_entry['animal'].encode('utf-8'))
     db.session.add(new_pet)
+    print "Added a Pet!"
 
 def create_photo_object(pet_entry, photo_entry):
     """Take photo attributes out of pet mini-dictionary and instantiate a Photo object."""
@@ -38,14 +40,14 @@ def create_photo_object(pet_entry, photo_entry):
                       photo_text=photo_entry['#text'])
     db.session.add(new_photo)
 
+    print "Loaded Photos."
 
 def load_shelters(all_shelters):
     """Get shelter data for nearby shelters from dictionary. Add shelters to db."""
     for shelter_dict in all_shelters['petfinder']['shelters']['shelter']:
         new_shelter = create_shelter_object(shelter_dict)
-        db.session.add(new_shelter)
+    db.session.add(new_shelter)
 
-    db.session.commit()
     print "Loaded Shelters."
 
 
@@ -57,7 +59,6 @@ def load_pets(all_pets):
             # If pet name includes possible sibling, make a dictionary entry
             if search.is_possible_sibling(pet['name'], pair_phrases):
                 new_pet = create_pet_object(pet)
-                db.session.add(new_pet)
             # If pet record contains photos, add a link to predetermined size photo.
                 if pet['media']:
                     # Load links to one "l" photo for each pet.
@@ -95,5 +96,8 @@ def seed_database():
     load_shelters(current_shelters)
 
     load_pets(current_pets)
+
+    db.session.commit()
+
 
   
