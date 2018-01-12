@@ -16,21 +16,21 @@
         </div>
         </div>
     </div>
-
+<div class="container">
             <div class="text">
             <div class="row">
      <p> {% for pet in pet_results: %}
 
          {% if loop.first %}<div class="row">{% endif %}
 
-            <div class="col-xs-4" >
-              <div class="pet_image"> <a href="/pet/{{ pet.pet_id }}"> 
+            <div class="col-xs-3" >
+              <div class="thumbnail"> <a href="/pet/{{ pet.pet_id }}"> 
                 <img class="img-responsive" id="img_{{ pet.pet_id }}" style="width:100%" src="{{ pet.photo_text }}"></a></div>
              <h2> {{ pet.pet_name }} </h2>
              <button data-pet-id="{{ pet.pet_id }}" class="button"> More </button>
              <div class="description" id="div_{{pet.pet_id}}"></div>
              </div>
-           {% if loop.index is divisibleby 3 %}</div><div class="row">{% endif %}
+           {% if loop.index is divisibleby 4 %}</div><div class="row">{% endif %}
          {% if loop.last %}</div>{% endif %}
  
          {% endfor %}
@@ -38,8 +38,8 @@
 
  </div>
 </div>
-        </p>
-
+     </p>
+</div>
 
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
