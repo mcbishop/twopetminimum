@@ -77,6 +77,6 @@ def display_shelter_pets():
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')
-
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     connect_to_db(app)
 
