@@ -8,6 +8,8 @@ Petfinder lists adoptable pets from an assortment of shelters and rescue groups.
 
 PetFinder's user interface doesn't allow to filter for bonded pairs or siblings (hence me building my own site!).  My app analyzes these listings to identify siblings and bonded pairs of cats, and only show these pairs.
 
+Tech stack: Petfinder API, Python, JavaScript, AJAX, Flask, Postgres
+
 
 ![cat_results](https://user-images.githubusercontent.com/810585/34858839-71106414-f707-11e7-9ffb-20e53f1233bf.png)
 
