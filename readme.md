@@ -12,3 +12,5 @@ PetFinder's user interface doesn't allow to filter for bonded pairs or siblings 
 ![cat_results](https://user-images.githubusercontent.com/810585/34858839-71106414-f707-11e7-9ffb-20e53f1233bf.png)
 
 To come: 
+- If you like [very fluffy cat], you'll love [exceptionally fluffy cat]! Suggest pets based on characteristics of pets who are favorited or currently being viewed.
+
