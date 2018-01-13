@@ -33,20 +33,16 @@
   <div class="carousel-inner" role="listbox">
 
 
-    <p> {% for photo in pet['media']['photos']['photo']: %}
-        {% if photo['@size'] == 'x' %}
+    {% for photo in pet['media']['photos']['photo'] if photo['@size'] == 'x' %}
+     
 
-    <div class="item{% if loop.index == 1 %} active {% endif %}">
-    <img src="{{ photo['#text'] }}"class="img-responsive" alt="{{pet['name']}}" width="460" height="345">
-    <div class="carousel-caption"><h3>{{pet['name']}}</h3></div>
-   </div>
-    {% endif %}
+        <div class="item{% if loop.first %} active {% endif %}" id="slide{{ loop.index }}"> 
+        <img src="{{ photo['#text'] }}"class="img-responsive" alt="{{pet['name']}}" width="460" height="345">
+            </div>
+  
     {% endfor %}
 
- 
-  
-  
-
+  </div>
   <!-- Left and right controls -->
   <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -58,12 +54,7 @@
   </a>
 </div>
    
-               
-
-
-              
-       
-                </div>
+  
              {{ pet['name'] }} <br>
              {% if pet['lastupdate'] %}
              {{ pet['lastupdate'] }}<br>
