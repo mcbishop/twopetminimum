@@ -19,8 +19,9 @@
 <div class="container">
     <div class="text">
             <p> {% for photo in pet['media']['photos']['photo']: %}
+                {% if photo['@size'] == 'x' %}
             {% if loop.first %}  <div class="row">{% endif %}
-                 {% if photo['@size'] == 'x' %}
+
   
             <div class="col-xs-3" >
                 <div class="thumbnail">
@@ -34,7 +35,17 @@
 
              {{ pet['name'] }} <br>
              {{ pet['lastupdate'] }}<br>
-             {{ pet['breeds']['breed'] }}<br>
+             {% for breed in pet['breeds']['breed'] %}
+                {% if breed|length > 1 %}
+                    {{ breed }}<br>
+                {% else %}
+                    {% if loop.index == 1 %}
+                    {{ pet['breeds']['breed'] }}<br>
+                    {% endif %}
+             
+             {% endif %}
+             {% endfor %}
+
              Age: {{ pet['age']}}<br>
              Gender: {{ pet['sex']}}<br>
              Size: {{ pet['size']}}<br>
