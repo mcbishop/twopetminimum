@@ -40,6 +40,9 @@ def display_pet(pet_id):
 
     pet = seed.get_api_pet(pet_id)
 
+    print "************"
+    print "pet is", pet
+
     pet = pet['petfinder']['pet']
 
     print pet.keys()
