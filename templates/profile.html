@@ -81,8 +81,9 @@
 
              
              </div>
-    </row>
- <row>
+    </div>
+ <div class="row">
+   <div class="col-xs-8 offset-4">
     <div id="map" style="height: 100%"></div>
     <div id="address"> <b> Shelter address</b></br>
       {% if shelter['address1'] is not none %}
@@ -95,6 +96,34 @@
       <br>
       {{ shelter['email']}} <br>
       {{ shelter['phone']}}
+
+</div>
+</div>
+ <!-- C2C contact form from TwilioDevEd https://github.com/TwilioDevEd/clicktocall-flask-->
+        <div class="row">
+            <div class="col-md-12">
+                <form id="contactForm" role="form">
+                    <div class="form-group">
+                        <h3>Send Pets </h3>
+                        <p class="help-block">
+                            Text us to your phone as a reminder!
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="phoneNumber" 
+                            placeholder="(000) 000-0000" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-default">
+                        Text Yourself!
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Include page dependencies -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/static/js/intlTelInput.min.js"></script>
+    <script src="/static/js/app.js"></script>
 
     <script>
       function initMap() {
@@ -144,10 +173,12 @@
   </div>
         </p>
 
-
+ <!-- Include page dependencies -->
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="/static/custom.js"></script>
+    <script src="/static/js/intlTelInput.min.js"></script>
+    <script src="/static/js/app.js"></script>
 <!--     </div> -->
 </body>
 </html>
