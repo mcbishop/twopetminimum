@@ -41,12 +41,20 @@ def display_pet(pet_id):
     pet = seed.get_api_pet(pet_id)
 
     print "************"
-    print "pet is", pet
+    print "pet is", pet['petfinder']['pet']['name']
 
     pet = pet['petfinder']['pet']
 
+    shelter = seed.get_api_shelter(pet['shelterId'])
 
-    return render_template("profile.html", pet=pet)
+    print "shelter is", shelter['petfinder']['shelter']['name']
+
+    shelter = shelter['petfinder']['shelter']
+
+
+
+
+    return render_template("profile.html", pet=pet, shelter=shelter)
 
 
 @app.route('/pet.json')
@@ -54,17 +62,9 @@ def display_pet_json():
     """ Display individual pet in json format. For AJAX use."""
     pet_id = request.args.get("pet_id")
 
-    if pet_id is None:
-        pet_id = "38921558"
-    print "****************"
-    print pet_id
-    print "****************"
     pet = seed.get_api_pet(pet_id)
 
     pet = pet['petfinder']['pet']
-    print "#########################"
-    print pet
-    print "#########################"
 
     return jsonify(pet)
 

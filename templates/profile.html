@@ -78,10 +78,7 @@
              Gender: {{ pet['sex']}}<br>
              Size: {{ pet['size']}}<br>
               {{ pet['description']}}<br>
-              <button class="shelter" data-shelter-id="{{ pet['shelterId'] }}" > More </button>
-             <div class="description" id="div_{{pet['shelterId']}}">
-
-             </div>
+             
              </div>
     </row>
  <row>
@@ -89,10 +86,12 @@
     <script>
       function initMap() {
         // Create a map object and specify the DOM element for display.
-        var uluru = {lat: -25.363, lng: 131.044};
+        console.log({{ shelter['latitude'] }});
+  
+        var shelter = {lat: {{ shelter['latitude'] }}, lng: {{ shelter['longitude'] }}};
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: uluru,
-          zoom: 8
+          center: shelter,
+          zoom: 15
         });
          var contentString = '<div id="content">'+
             '<div id="siteNotice">'+
@@ -121,9 +120,10 @@
         });
 
         var marker = new google.maps.Marker({
-          position: uluru,
+          position: shelter,
           map: map,
           title: 'Name of Shelter'
+
         });
 
         marker.addListener('click', function() {
@@ -132,8 +132,7 @@
       }
 
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVMRABfKAEyabSunnESwsdxt-Rj2kRtdw&callback=initMap"
-    async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVMRABfKAEyabSunnESwsdxt-Rj2kRtdw&callback=initMap" async defer></script>
              </div>
              </div>
  </row>

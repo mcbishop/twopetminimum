@@ -15,27 +15,6 @@ function getPetInfo(evt) {
         });
 }
 
-function getShelterInfo(evt) {
-      console.log(evt);
-    var shelter_id = $(this).data('shelterId');
-    console.log("Shelter ID is", shelter_id);
-
-    $.get("/shelter.json", {'shelter_id':shelter_id},
-        function(results) {
-            console.log("Made it! Results are", results);
-            var shelter_id = results.id;
-            var name = results.name;
-            var lat = results.latitude;
-            var lng = results.longitude;
-            var phone = results.phone;
-            var email = results.email;
-            console.log(email);
-            
-            $('#div_' + shelter_id).html(lat);
-        });
-}  
-
-$('.shelter').click(getShelterInfo);
 
 $('.button').click(getPetInfo);
 
