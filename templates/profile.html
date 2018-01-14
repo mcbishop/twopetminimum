@@ -102,16 +102,17 @@
  <!-- C2C contact form from TwilioDevEd https://github.com/TwilioDevEd/clicktocall-flask-->
         <div class="row">
             <div class="col-md-12">
-                <form id="contactForm" role="form">
+                <form action="/text" id="contactForm"  method="POST">
                     <div class="form-group">
                         <h3>Send Pets </h3>
                         <p class="help-block">
-                            Text us to your phone as a reminder!
+                            Text this listing to your phone as a reminder!
                         </p>
                     </div>
                     <div class="form-group">
                         <input type="text" id="phoneNumber" 
                             placeholder="(000) 000-0000" class="form-control">
+                        <!-- TODO: text photo and link -->
                     </div>
                     <button type="submit" class="btn btn-default">
                         Text Yourself!
@@ -120,10 +121,6 @@
             </div>
         </div>
     </div>
-    <!-- Include page dependencies -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="/static/js/intlTelInput.min.js"></script>
-    <script src="/static/js/app.js"></script>
 
     <script>
       function initMap() {
@@ -140,8 +137,8 @@
             '</div>'+
             '<h3 id="firstHeading" class="firstHeading">'+'{{ shelter['name']}}' +'</h3>'+
             '<div id="bodyContent">'+
-            '<p><b>{{ shelter['address1']}}</b>' +
-            '<p><b>{{ shelter['address2']}}</b>' +
+            '<p><b>{{ shelter['address1'] if shelter['address1'] is not none }}</b>' +
+            '<p><b>{{ shelter['address2'] if shelter['address2'] is not none }}</b>' +
             '</div>';
 
 
@@ -177,8 +174,9 @@
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="/static/custom.js"></script>
-    <script src="/static/js/intlTelInput.min.js"></script>
-    <script src="/static/js/app.js"></script>
+
+
+
 <!--     </div> -->
 </body>
 </html>
