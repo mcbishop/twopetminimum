@@ -5,6 +5,9 @@ from model import Pet, Shelter, Photo, connect_to_db, db
 import seed
 import json
 
+import os
+google_key = os.environ['GOOGLE_SECRET']
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -52,7 +55,7 @@ def display_pet(pet_id):
     shelter = shelter['petfinder']['shelter']
     print pet.keys()
 
-    return render_template("profile.html", pet=pet, shelter=shelter)
+    return render_template("profile.html", pet=pet, shelter=shelter, google_key=google_key)
 
 
 @app.route('/pet.json')
