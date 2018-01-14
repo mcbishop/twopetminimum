@@ -71,7 +71,6 @@ def load_pets(all_pets):
                                     photo_exists = True
 
  
-
 def get_api_pet(pet_id):
     """ Query the API for more info about a given pet."""
 
@@ -82,6 +81,18 @@ def get_api_pet(pet_id):
     current_pet = search.get_pet(pet_search_terms)
 
     return current_pet
+
+
+def get_api_shelter(shelter_id):
+    """ Query the API for more info about a given shelter."""
+
+    # Payload for requests library
+    shelter_search_terms = {'key': key, 'id': shelter_id}
+
+    # Send payload to Petfinder API. Helper function returns a dictionary.
+    current_shelter = search.get_shelter(shelter_search_terms)
+
+    return current_shelter
 
 
 def seed_database():

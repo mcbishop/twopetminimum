@@ -78,7 +78,10 @@
              Gender: {{ pet['sex']}}<br>
              Size: {{ pet['size']}}<br>
               {{ pet['description']}}<br>
- 
+
+            <button data-shelter-id="{{ pet['shelterId'] }}" class="button shelter"> More </button>
+             <div class="description" id="div_{{ pet['shelterId'] }}"></div>
+             </div>
              </div>
 </div>
         </div>

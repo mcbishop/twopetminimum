@@ -45,7 +45,6 @@ def display_pet(pet_id):
 
     pet = pet['petfinder']['pet']
 
-    print pet.keys()
 
     return render_template("profile.html", pet=pet)
 
@@ -69,6 +68,25 @@ def display_pet_json():
 
     return jsonify(pet)
 
+
+@app.route('/shelter.json')
+def display_shelter():
+    """ Display shelter info."""
+
+    shelter_id = request.args.get("shelter_id")
+    print "&&&&&&&&&&&&& SHELTER ROUTE &&&&&&&&&&&&&"
+    print shelter_id
+    print "&&&&&&&&&&&&&"
+
+    shelter = seed.get_api_shelter(shelter_id)
+
+    shelter = shelter['petfinder']['shelter']
+
+    print shelter
+
+    print "#########################"
+
+    return jsonify(shelter)
 
 @app.route('/shelters')
 def display_shelter_pets():

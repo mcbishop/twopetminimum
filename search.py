@@ -33,6 +33,16 @@ def get_pet(payload):
     return pet_dict
 
 
+def get_shelter(payload):
+    """ Send request to API and return dictionary of data for one shelter."""
+
+    r = requests.get(
+        "http://api.petfinder.com/shelter.get?",
+        params=payload)
+
+    shelter_dict = xmltodict.parse(r.text)
+    return shelter_dict
+
 def get_current_shelters(payload):
     """Send request to API and return dictionary of nearby shelter search results."""
 
