@@ -31,7 +31,7 @@ function getShelterInfo(evt) {
             var email = results.email;
             console.log(email);
             
-            $('#div_' + shelter_id).html(email);
+            $('#div_' + shelter_id).html(lat);
         });
 }  
 
