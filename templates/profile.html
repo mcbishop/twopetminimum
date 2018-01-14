@@ -19,7 +19,8 @@
          
             
 <div class="container"> 
-            
+     <div class="row">
+        <div class="col-xs-6 offset-3">
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
   <ol class="carousel-indicators">
@@ -37,7 +38,7 @@
      
 
         <div class="item{% if loop.first %} active {% endif %}" id="slide{{ loop.index }}"> 
-        <img src="{{ photo['#text'] }}"class="img-responsive" alt="{{pet['name']}}" width="460" height="345">
+        <img src="{{ photo['#text'] }}"class="img-responsive" margin="auto" alt="{{pet['name']}}" width="100%" height="100%">
             </div>
   
     {% endfor %}
@@ -53,6 +54,9 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-8 offset-4">
    
   
              {{ pet['name'] }} <br>
@@ -76,7 +80,7 @@
               {{ pet['description']}}<br>
  
              </div>
-
+</div>
         </div>
         </div>
         </div>
