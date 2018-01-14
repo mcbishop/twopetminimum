@@ -35,11 +35,11 @@ function getShelterInfo(evt) {
         });
 }  
 
-
+$('.shelter').click(getShelterInfo);
 
 $('.button').click(getPetInfo);
 
-$('.button shelter').click(getShelterInfo);
+
 
 
 
