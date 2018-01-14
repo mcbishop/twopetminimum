@@ -52,8 +52,6 @@ def display_pet(pet_id):
     shelter = shelter['petfinder']['shelter']
 
 
-
-
     return render_template("profile.html", pet=pet, shelter=shelter)
 
 
