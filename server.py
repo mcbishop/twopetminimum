@@ -50,7 +50,7 @@ def display_pet(pet_id):
     print "shelter is", shelter['petfinder']['shelter']['name']
 
     shelter = shelter['petfinder']['shelter']
-
+    print pet.keys()
 
     return render_template("profile.html", pet=pet, shelter=shelter)
 
