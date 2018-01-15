@@ -113,12 +113,10 @@ def load_pets(all_pets):
                                     photo_exists = True
             # Load breeds associated with each pet. 
                 if pet['breeds']:
-                    # Pet could have one breed or a list of breeds.
                     # Create a new breed if it's not in the db already.
-
-                    # Issue: currently, for loop means creating a new breed for every string.
                     created_solo_breed = False
                     for breed in pet['breeds']['breed']:
+                        # Pet could have one breed or a list of breeds.
                         if len(breed) > 1:
                             create_breed_object(breed)
                             create_petbreed_object(pet, breed)
