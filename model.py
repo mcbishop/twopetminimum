@@ -36,6 +36,7 @@ class Pet(db.Model):
     shelter_id = db.Column(db.String(20))
                            # db.ForeignKey('shelters.shelter_id'))
     pet_name = db.Column(db.String(100))
+    pet_breed = db.Column(db.String(100))
     pet_description = db.Column(db.Text)
     pet_type = db.Column(db.String(50))
     lastupdate = db.Column(db.DateTime)
@@ -47,6 +48,23 @@ class Pet(db.Model):
     def __repr__(self):
         return "<Pet name =  {} >".format(self.pet_name.encode('ascii', 'ignore').decode('ascii'))
 
+class PetBreed(db.Model):
+    """ A table for Pets. Each pet can have multiple breeds."""
+
+    __tablename__ = 'petbreeds'
+
+    petbreed_id = db.Column(db.Integer, primary_key=True)
+    breed_id = db.Column(db.Integer, db.Foreignkey('breeds.breed_id'))
+
+    breed = db.relationship('Breed', backref="petbreeds")
+
+class Breed(db.Model):
+    """ A table for Breeds."""
+
+    __tablename__ = 'breeds'
+    
+    breed_id = db.Column(db.Integer, primary_key=True)
+    breed_name = db.Column(String(100))
 
 class Photo(db.Model):
     """A table for Pet photos. Each pet has many photos."""

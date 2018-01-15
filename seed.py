@@ -42,6 +42,22 @@ def create_photo_object(pet_entry, photo_entry):
 
     print "Loaded Photos."
 
+def create_breed_object(pet_entry, breed):
+    """Take breed attributes out of pet list and instantiate a Breed record if none exists,
+     then link to pet."""
+    
+    # Look in the database to see if breed already exists.
+
+    # If it does, find its primary key and use that to make a pet breed record.
+
+    # If it doesn't, make a new record, and use its primary key to make a new pet breed record.
+    
+    new_breed = Breed(breed_name=breed)
+
+    db.session.add(new_breed)
+
+    print "Loaded Photos."
+
 def load_shelters(all_shelters):
     """Get shelter data for nearby shelters from dictionary. Add shelters to db."""
     for shelter_dict in all_shelters['petfinder']['shelters']['shelter']:
@@ -69,6 +85,12 @@ def load_pets(all_pets):
                                 if photo_exists == False:
                                     new_photo = create_photo_object(pet, photo_record)
                                     photo_exists = True
+            # Load pet breeds. Create a new bread if it's not in the db already.
+                if pet['breed']:
+                    for breed in pet['breed']['breeds']:
+                        new_breed = create_breed_object(pet, breed_record)
+
+
 
  
 def get_api_pet(pet_id):
