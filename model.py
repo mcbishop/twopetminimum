@@ -66,7 +66,7 @@ class Breed(db.Model):
     __tablename__ = 'breeds'
     
     breed_id = db.Column(db.Integer, primary_key=True)
-    breed_name = db.Column(String(100))
+    breed_name = db.Column(db.String(100))
 
 class Photo(db.Model):
     """A table for Pet photos. Each pet has many photos."""
