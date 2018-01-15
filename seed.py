@@ -27,6 +27,7 @@ def create_pet_object(pet_entry):
                   lastupdate=pet_entry['lastUpdate'].encode('utf-8'), 
                   pet_type=pet_entry['animal'].encode('utf-8'))
     db.session.add(new_pet)
+    db.session.commit()
     print "Added a Pet!"
 
 def create_photo_object(pet_entry, photo_entry):
@@ -60,20 +61,28 @@ def create_breed_object(breed):
         print "Added new Breed"
 
 
+def get_breed_id(breed):
+    """ Function to return pet breed ID from database."""
+    sql = "SELECT breed_id FROM breeds WHERE breed_name = :name"
+    cursor = db.session.execute(sql, {'name': breed})
+    print "Looking up", breed
+    petbreed_id = cursor.fetchone()
+    print "***** Pet breed ID Is", petbreed_id[0]
+    return petbreed_id[0]
 
 
 def create_petbreed_object(pet_entry, breed):
     """Take breed attributes out of pet list ,
      then link to pet."""
     
-    petbreed_id = verify_breed_id(breed)
-
+    petbreed_id = get_breed_id(breed)
+    
     new_petbreed = PetBreed(pet_id=pet_entry['id'],
                             breed_id=petbreed_id)
-    db.session.add(new_petbreed)
-    db.session.commit()
 
-    print "Loaded each Pet's Breeds."
+    db.session.add(new_petbreed)
+
+    print "Loaded a Pet's Breeds."
 
 def load_shelters(all_shelters):
     """Get shelter data for nearby shelters from dictionary. Add shelters to db."""
@@ -91,7 +100,7 @@ def load_pets(all_pets):
         for pet in pet_dict:
             # If pet name includes possible sibling, make a dictionary entry
             if search.is_possible_sibling(pet['name'], pair_phrases):
-                new_pet = create_pet_object(pet)
+                create_pet_object(pet)
             # If pet record contains photos, add a link to predetermined size photo.
                 if pet['media']:
                     # Load links to one "l" photo for each pet.
@@ -100,17 +109,28 @@ def load_pets(all_pets):
                         for photo_record in pet['media']['photos']['photo']:
                             if photo_record['@size'] == 'x':
                                 if photo_exists == False:
-                                    new_photo = create_photo_object(pet, photo_record)
+                                    create_photo_object(pet, photo_record)
                                     photo_exists = True
             # Load breeds associated with each pet. 
-            # Create a new breed if it's not in the db already.
                 if pet['breeds']:
                     # Pet could have one breed or a list of breeds.
+                    # Create a new breed if it's not in the db already.
+
+                    # Issue: currently, for loop means creating a new breed for every string.
+                    created_solo_breed = False
                     for breed in pet['breeds']['breed']:
                         if len(breed) > 1:
-                            new_breed = create_breed_object(breed)
+                            create_breed_object(breed)
+                            create_petbreed_object(pet, breed)
                         else:
-                            new_breed = create_breed_object(pet['breeds']['breed'])
+                            while created_solo_breed is False:
+                                create_breed_object(pet['breeds']['breed'])
+                                create_petbreed_object(pet, pet['breeds']['breed'])
+                                created_solo_breed = True
+                        
+                        
+
+
 
 
 
@@ -142,13 +162,13 @@ def get_api_shelter(shelter_id):
 def seed_database():
     pet_search_terms = {'key': key, 'animal': 'cat', 'location': '94110', 'count': 1000}
 
-    shelter_search_terms = {'key': key, 'location': '94110', 'count': 1000}
+    # shelter_search_terms = {'key': key, 'location': '94110', 'count': 1000}
 
-    current_shelters = search.get_current_shelters(shelter_search_terms)
+    # current_shelters = search.get_current_shelters(shelter_search_terms)
 
     current_pets = search.get_current_pets(pet_search_terms)
 
-    load_shelters(current_shelters)
+    # load_shelters(current_shelters)
 
     load_pets(current_pets)
 
