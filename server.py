@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, jsonify, url_for
+from flask import Flask, request, redirect, session, render_template, jsonify, url_for
 from flask_googlemaps import GoogleMaps, Map
 from flask.ext.sqlalchemy import SQLAlchemy
 from model import Pet, Shelter, Photo, connect_to_db, db
@@ -10,9 +10,13 @@ from twilio.rest import Client
 import os
 google_key = os.environ['GOOGLE_SECRET']
 
+
 # Declare and configure application
 app = Flask(__name__, static_url_path='/static')
 app.config.from_pyfile('local_settings.py')
+
+# set the secret key. 
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 @app.route('/')
 def index():
@@ -47,6 +51,9 @@ def display_pet(pet_id):
 
     pet = seed.get_api_pet(pet_id)
 
+
+    session['pet_id'] = pet_id
+
     print "************"
     print "pet is", pet['petfinder']['pet']['name']
 
@@ -72,6 +79,7 @@ def display_pet_json():
     pet = seed.get_api_pet(pet_id)
 
     pet = pet['petfinder']['pet']
+
 
     return jsonify(pet)
 
@@ -137,8 +145,7 @@ def call():
         app.logger.error(e)
         return jsonify({'error': str(e)})
 
-
-    return jsonify({'message': 'Call incoming!'})
+    return redirect('/pet/'+str(session['pet_id']))
 
 
 
