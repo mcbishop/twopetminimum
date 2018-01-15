@@ -21,7 +21,7 @@
 <div class="container"> 
      <div class="row">
         <div class="col-xs-6 offset-3">
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
   <ol class="carousel-indicators">
     <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -31,19 +31,18 @@
   </ol>
 
   <!-- Wrapper for slides -->
-  <div class="carousel-inner" role="listbox">
-
+                  <div class="carousel-inner" role="listbox">
 
     {% for photo in pet['media']['photos']['photo'] if photo['@size'] == 'x' %}
-     
+               
 
-        <div class="item{% if loop.first %} active {% endif %}" id="slide{{ loop.index }}"> 
-        <img src="{{ photo['#text'] }}"class="img-responsive" margin="auto" alt="{{pet['name']}}" width="100%" height="100%">
-            </div>
+                  <div class="item{% if loop.first %} active {% endif %}" id="slide{{ loop.index }}"> 
+                  <img src="{{ photo['#text'] }}"class="img-responsive" margin="auto" alt="{{pet['name']}}" width="100%" height="100%">
+                  </div>
   
     {% endfor %}
 
-  </div>
+                </div>
   <!-- Left and right controls -->
   <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -53,8 +52,11 @@
     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>
-</div>
-  </div>
+                  </div> <!--end listbox -->
+
+              </div><!--end carousel -->
+    </div> <!--end row -->
+
   <div class="row">
     <div class="col-xs-8 offset-4">
    
@@ -80,12 +82,13 @@
               {{ pet['description']}}<br>
 
              
-             </div>
+        </div>
     </div>
+
  <div class="row">
    <div class="col-xs-8 offset-4">
-    <div id="map" style="height: 100%"></div>
-    <div id="address"> <b> Shelter address</b></br>
+      <div id="map" style="height: 100%"></div>
+      <div id="address"> <b> Shelter address</b></br>
       {% if shelter['address1'] is not none %}
       {{ shelter['address1']}} <br>
       {% endif %}
@@ -97,12 +100,13 @@
       {{ shelter['email']}} <br>
       {{ shelter['phone']}}
 
+      </div>
 </div>
 </div>
  <!-- C2C contact form from TwilioDevEd https://github.com/TwilioDevEd/clicktocall-flask-->
         <div class="row">
             <div class="col-md-12">
-                <form action="/text" id="contactForm"  method="POST">
+                <form action="/text" id="contactForm"  method="post">
                     <div class="form-group">
                         <h3>Send Pets </h3>
                         <p class="help-block">
@@ -110,17 +114,26 @@
                         </p>
                     </div>
                     <div class="form-group">
-                        <input type="text" id="phoneNumber" 
-                            placeholder="(000) 000-0000" class="form-control">
-                        <!-- TODO: text photo and link -->
+                        <input type="text" name="phoneNumber" placeholder="(000) 000-0000" class="form-control">
+                    {% for photo in pet['media']['photos']['photo'] if photo['@size'] == 'x' %}
+                          {% if loop.first %}
+                        <input type="hidden" name="photo_url" value="{{ photo['#text'] }}">
+  
+                        <input type="hidden" name="pet_id" value="{{ pet['id'] }}">
+                                                {% endif %}
+                        {% endfor %}
                     </div>
                     <button type="submit" class="btn btn-default">
-                        Text Yourself!
+                        Text Yourself! 
                     </button>
                 </form>
+                   
             </div>
         </div>
-    </div>
+    </div>   
+</div>
+  
+
 
     <script>
       function initMap() {
@@ -160,16 +173,7 @@
 
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key={{ google_key }}&callback=initMap" async defer></script>
-             </div>
-             </div>
- </row>
-        </div>
-        </div>
-        </div>
-</div>
-  </div>
-        </p>
-
+  
  <!-- Include page dependencies -->
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

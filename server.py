@@ -50,6 +50,7 @@ def display_pet(pet_id):
     print "************"
     print "pet is", pet['petfinder']['pet']['name']
 
+
     pet = pet['petfinder']['pet']
 
     shelter = seed.get_api_shelter(pet['shelterId'])
@@ -57,6 +58,7 @@ def display_pet(pet_id):
     print "shelter is", shelter['petfinder']['shelter']['name']
 
     shelter = shelter['petfinder']['shelter']
+    print pet
     print pet.keys()
 
     return render_template("profile.html", pet=pet, shelter=shelter, google_key=google_key)
@@ -111,9 +113,11 @@ def call():
     print "*********"
     print request.form
     phone_number = request.form.get('phoneNumber')
-    #TODO: get photo link and pet listing link from text
+    pet_photo = request.form.get('photo_url')
+    pet_id = request.form.get('pet_id')
 
-    print phone_number
+    url = "http://www.twocatminimum.com/pet/"+pet_id
+
 
     try:
         twilio_client = Client(app.config['TWILIO_ACCOUNT_SID'],
@@ -125,8 +129,8 @@ def call():
     try:
         message = twilio_client.messages.create(from_=app.config['TWILIO_CALLER_ID'],
                                    to=phone_number,
-                                   body="Visit me! https://www.petfinder.com/cat/mr-whiskers-40604562/ca/san-francisco/give-me-shelter-cat-rescue-ca1061/",
-                                   media_url="https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/40604562/1/?bust=1515320820")
+                                   body="Visit me! "+ url,
+                                   media_url=pet_photo)
         print(message.sid)
 
     except Exception as e:
