@@ -93,6 +93,13 @@ def all_pet_results(all_pets, phrases):
         print len(pet_names)
         return pet_names
 
+def suggest_pet(pet):
+    """ Look at current pet's breed, fur length, age, size, color and find similar pets."""
+
+    # Step one: where are these stored in XML, and store them when seeding.
+    # Step two: construct a SQL "or" search to find similar pets.
+    # STep three: change server and front end to find.
+
 
 def find_friend(name, pet_dict):
     # Search same-shelter listings for a pet with matching friend/sibling name.
