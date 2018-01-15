@@ -54,7 +54,9 @@ class PetBreed(db.Model):
     __tablename__ = 'petbreeds'
 
     petbreed_id = db.Column(db.Integer, primary_key=True)
-    breed_id = db.Column(db.Integer, db.Foreignkey('breeds.breed_id'))
+    pet_id = db.Column(db.Integer, db.ForeignKey('pets.pet_id'))
+    breed_id = db.Column(db.Integer, db.ForeignKey('breeds.breed_id'))
+
 
     breed = db.relationship('Breed', backref="petbreeds")
 

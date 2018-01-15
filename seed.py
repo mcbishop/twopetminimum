@@ -1,4 +1,4 @@
-from model import Pet, Shelter, Photo, connect_to_db, db
+from model import Pet, Shelter, Photo, Breed, PetBreed, connect_to_db, db
 import search
 import os
 import requests
@@ -42,21 +42,39 @@ def create_photo_object(pet_entry, photo_entry):
 
     print "Loaded Photos."
 
-def create_breed_object(pet_entry, breed):
-    """Take breed attributes out of pet list and instantiate a Breed record if none exists,
+def verify_breed_id(breed):
+    """ Check DB to see if there's a breed record. If not, make a new breed and get its id.
+    If there is one, get its id."""
+     # Look in the database to see if breed already exists.
+    sql = "SELECT breed_id, breed_name FROM breeds WHERE breed_name = :name"
+    cursor = db.session.execute(sql, {'name': breed})
+     # If it does, find its primary key and use that to make a pet breed record.
+    if cursor is None:
+    # If it doesn't, make a new record, and use its primary key to make a new pet breed record.
+        new_breed = Breed(breed_name=breed)
+        db.session.add(new_breed)
+        db.session.commit()
+        print "Added new Breed"
+        # Find primary key of new record
+        cursor = db.session.execute(sql, {'name': breed})
+
+    current_id = cursor.fetchone()
+
+    return current_id
+
+
+def create_petbreed_object(pet_entry, breed):
+    """Take breed attributes out of pet list ,
      then link to pet."""
     
-    # Look in the database to see if breed already exists.
+    petbreed_id = verify_breed_id(breed)
 
-    # If it does, find its primary key and use that to make a pet breed record.
+    new_petbreed = PetBreed(pet_id=pet_entry['id'],
+                            breed_id=petbreed_id)
+    db.session.add(new_petbreed)
+    db.session.commit()
 
-    # If it doesn't, make a new record, and use its primary key to make a new pet breed record.
-    
-    new_breed = Breed(breed_name=breed)
-
-    db.session.add(new_breed)
-
-    print "Loaded Photos."
+    print "Loaded each Pet's Breeds."
 
 def load_shelters(all_shelters):
     """Get shelter data for nearby shelters from dictionary. Add shelters to db."""
@@ -85,7 +103,8 @@ def load_pets(all_pets):
                                 if photo_exists == False:
                                     new_photo = create_photo_object(pet, photo_record)
                                     photo_exists = True
-            # Load pet breeds. Create a new bread if it's not in the db already.
+            # Load breeds associated with each pet. 
+            # Create a new bread if it's not in the db already.
                 if pet['breed']:
                     for breed in pet['breed']['breeds']:
                         new_breed = create_breed_object(pet, breed_record)
