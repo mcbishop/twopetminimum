@@ -103,18 +103,22 @@
       </div>
     </div>
     <div class="row">
-     <div class="col-xs-8 offset-4">
+     <div class="col-xs-3">
       
       {% for pet in suggested_pets %}
-          {{ pet['name'] }}
+      
         {% if pet['media'] %}
               {% for photo in pet['media']['photos']['photo'] if photo['@size'] == 'x' %}
-                  {% if loop.first %}
-       <img src="{{ photo['#text'] }}"class="img-responsive" margin="auto" alt="{{pet['name']}}" width="100%" height="100%">
+                  {% if loop.first %}<div class="row">{% endif %}
+                 <div class="col-xs-3" >
 
-                 {% endif %}
-             {% endfor %}
+                  <h3> {{ pet['name'] }} </h3>
+       <img src="{{ photo['#text'] }}"class="img-responsive" margin="auto" alt="{{pet['name']}}" width="100%" height="100%">
+                   {% if loop.index is divisibleby 4 %}</div><div class="row">{% endif %}
+                 {% if loop.last %}</div>{% endif %}
+               
           {% endif %}
+          
        {% endfor %}
     
 
