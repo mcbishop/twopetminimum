@@ -46,7 +46,7 @@ def search():
 
 @app.route('/pet/<int:pet_id>')
 def display_pet(pet_id):
-    """ Display individual pet."""
+    """ Display individual pet, along with suggested pets based on similarity."""
 
     pet = seed.get_api_pet(pet_id)
 
@@ -66,7 +66,6 @@ def display_pet(pet_id):
     
     suggested_pets = pet_suggester(pet_id)
 
-    print suggested_pets
 
     return render_template("profile.html", pet=pet, shelter=shelter, google_key=google_key, suggested_pets=suggested_pets)
 
@@ -196,7 +195,7 @@ def pet_suggester(pet_id):
 
     # Remove current pet if it was suggested, and shorten list
     suggested_pet_list.remove(pet_id)
-    suggested_pet_list = suggested_pet_list[:5]
+    suggested_pet_list = suggested_pet_list[:4]
    
     # look up full records of suggested pets in API
     suggest_pets = []

@@ -4,7 +4,7 @@
     <!-- Custom styles for this template -->
     <link href="/static/styles.css" rel="stylesheet">
 
-    <title>Two Pet Minimum</title>
+    <title>Two Cat Minimum</title>
 </head>
 <body>
 <div class="container">
@@ -24,11 +24,10 @@
          {% if loop.first %}<div class="row">{% endif %}
 
             <div class="col-xs-3" >
-              <div class="thumbnail"> <a href="/pet/{{ pet.pet_id }}"> 
-                <img class="img-responsive" id="img_{{ pet.pet_id }}" style="width:100%" src="{{ pet.photo_text }}"></a></div>
+              <a href="/pet/{{ pet.pet_id }}"> 
+                <img class="img-thumbnail" id="img_{{ pet.pet_id }}" style="width:100%" src="{{ pet.photo_text }}"></a>
              <h2> {{ pet.pet_name }} </h2>
-             <button data-pet-id="{{ pet.pet_id }}" class="button"> More </button>
-             <div class="description" id="div_{{pet.pet_id}}"></div>
+    
              </div>
            {% if loop.index is divisibleby 4 %}</div><div class="row">{% endif %}
          {% if loop.last %}</div>{% endif %}

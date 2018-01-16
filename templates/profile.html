@@ -4,7 +4,7 @@
     <!-- Custom styles for this template -->
     <link href="/static/styles.css" rel="stylesheet">
 
-    <title>Two Pet Minimum</title>
+    <title>Two Cat Minimum</title>
 </head>
 <body>
 <div class="container">
@@ -87,7 +87,7 @@
 
  <div class="row">
    <div class="col-xs-8 offset-4">
-      <div id="map" style="height: 100%"></div>
+      <div id="map" style="height: 25%"></div>
       <div id="address"> <b> Shelter address</b></br>
       {% if shelter['address1'] is not none %}
       {{ shelter['address1']}} <br>
@@ -102,32 +102,30 @@
 
       </div>
     </div>
+ </div>
+  </div>
+  <div class="container"> 
     <div class="row">
-     <div class="col-xs-3">
-      
+  
       {% for pet in suggested_pets %}
-      
+        <div class="col-xs-3" >
         {% if pet['media'] %}
               {% for photo in pet['media']['photos']['photo'] if photo['@size'] == 'x' %}
-                  {% if loop.first %}<div class="row">{% endif %}
-                 <div class="col-xs-3" >
+                 {% if loop.first %}
+                  <h4> <a href="/pet/{{ pet['id'] }}">  {{ pet['name'] }} </h4>
+                
+                  <img src="{{ photo['#text'] }}"class="img-thumbnail" alt="{{pet['name']}}"> </a> </div>
+                  {% endif %}
 
-                  <h3> {{ pet['name'] }} </h3>
-       <img src="{{ photo['#text'] }}"class="img-responsive" margin="auto" alt="{{pet['name']}}" width="100%" height="100%">
-                   {% if loop.index is divisibleby 4 %}</div><div class="row">{% endif %}
-                 {% if loop.last %}</div>{% endif %}
-               
+              {% endfor %}
           {% endif %}
-          
+
+       
        {% endfor %}
-    
-
-
-      <img src=
+    </div> 
       </div>
-    </div>
-</div>
-</div>
+
+
  <!-- C2C contact form from TwilioDevEd https://github.com/TwilioDevEd/clicktocall-flask-->
         <div class="row">
             <div class="col-md-12">
@@ -157,7 +155,7 @@
         </div>
     </div>   
 </div>
-  
+  </div>
 
 
     <script>
@@ -168,7 +166,7 @@
         var shelter_location = {lat: {{ shelter['latitude'] }}, lng: {{ shelter['longitude'] }}};
         var map = new google.maps.Map(document.getElementById('map'), {
           center: shelter_location,
-          zoom: 15
+          zoom: 16
         });
          var contentString = '<div id="content">'+
             '<div id="siteNotice">'+

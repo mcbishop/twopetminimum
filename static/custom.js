@@ -15,10 +15,9 @@ function getPetInfo(evt) {
         });
 }
 
-
 $('.button').click(getPetInfo);
 
-
+/*$('.img-thumbnail').hover(showBorder);*/
 
 
 
