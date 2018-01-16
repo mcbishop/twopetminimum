@@ -4,7 +4,6 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from model import Pet, Shelter, Photo, connect_to_db, db
 import seed
 import json
-from twilio.twiml.voice_response import VoiceResponse
 from twilio.rest import Client
 
 import os
@@ -69,6 +68,28 @@ def display_pet(pet_id):
     print pet.keys()
 
     return render_template("profile.html", pet=pet, shelter=shelter, google_key=google_key)
+
+@app.route('/pet/suggest')
+def pet_suggester():
+    """ Suggest additional pets."""
+
+    pet_id = session['pet_id']
+    # Look up current pet's pet ids
+    pet_breed_ids = seed.get_pet_breeds(pet_id)
+
+    #unpack tuples into a list
+    breeds_list = [breed_id.breed_id for breed_id in pet_breed_ids]
+
+    suggested_pets = []
+    # Look up more pets who match those IDs and suggest them
+    for breed in breeds_list:
+        suggested_pets.append(suggest_pet(breed))
+        
+    suggested_pet_list = [pet.pet_id for pet in suggested_pets]
+
+    print suggested_pet_list
+
+    pass
 
 
 @app.route('/pet.json')
@@ -146,6 +167,25 @@ def call():
         return jsonify({'error': str(e)})
 
     return redirect('/pet/'+str(session['pet_id']))
+
+####### HELPER FUNCTION ########
+
+
+def suggest_pet(pet_breed):
+    """ Look at current pet's breed, age, size, and find similar pets.
+    TODO: identify pet color and fur length, since they're not in XML returned by API.
+
+    Groupings other than exact match:
+           (Domestic Short Hair, American Shorthair)
+        (Maine Coon, Domestic Long Hair)
+    """
+
+
+    sql = "SELECT pet_id FROM petbreeds WHERE petbreeds.breed_id = :name"
+
+    cursor = db.session.execute(sql, {'name': pet_breed})
+    petbreed_ids = cursor.fetchall()
+    return petbreed_ids
 
 
 
