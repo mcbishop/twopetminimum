@@ -101,6 +101,20 @@
       {{ shelter['phone']}}
 
       </div>
+    </div>
+    <div class="row">
+     <div class="col-xs-8 offset-4">
+      {% for pet in suggested_pets %}
+          {{ pet['name'] }}
+      {% for photo in pet['media']['photos']['photo'] if photo['@size'] == 'x' %}
+       <img src="{{ photo['#text'] }}"class="img-responsive" margin="auto" alt="{{pet['name']}}" width="100%" height="100%">
+       {% endfor %}
+       {% endfor %}
+
+
+      <img src=
+      </div>
+    </div>
 </div>
 </div>
  <!-- C2C contact form from TwilioDevEd https://github.com/TwilioDevEd/clicktocall-flask-->

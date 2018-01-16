@@ -50,7 +50,6 @@ def display_pet(pet_id):
 
     pet = seed.get_api_pet(pet_id)
 
-
     session['pet_id'] = pet_id
 
     print "************"
@@ -64,32 +63,13 @@ def display_pet(pet_id):
     print "shelter is", shelter['petfinder']['shelter']['name']
 
     shelter = shelter['petfinder']['shelter']
-    print pet
-    print pet.keys()
+    
+    suggested_pets = pet_suggester(pet_id)
 
-    return render_template("profile.html", pet=pet, shelter=shelter, google_key=google_key)
+    print suggested_pets
 
-@app.route('/pet/suggest')
-def pet_suggester():
-    """ Suggest additional pets."""
+    return render_template("profile.html", pet=pet, shelter=shelter, google_key=google_key, suggested_pets=suggested_pets)
 
-    pet_id = session['pet_id']
-    # Look up current pet's pet ids
-    pet_breed_ids = seed.get_pet_breeds(pet_id)
-
-    #unpack tuples into a list
-    breeds_list = [breed_id.breed_id for breed_id in pet_breed_ids]
-
-    suggested_pets = []
-    # Look up more pets who match those IDs and suggest them
-    for breed in breeds_list:
-        suggested_pets.append(suggest_pet(breed))
-        
-    suggested_pet_list = [pet.pet_id for pet in suggested_pets]
-
-    print suggested_pet_list
-
-    pass
 
 
 @app.route('/pet.json')
@@ -168,16 +148,12 @@ def call():
 
     return redirect('/pet/'+str(session['pet_id']))
 
-####### HELPER FUNCTION ########
+####### HELPER FUNCTIONS ########
 
 
-def suggest_pet(pet_breed):
-    """ Look at current pet's breed, age, size, and find similar pets.
-    TODO: identify pet color and fur length, since they're not in XML returned by API.
-
-    Groupings other than exact match:
-           (Domestic Short Hair, American Shorthair)
-        (Maine Coon, Domestic Long Hair)
+def breed_lookup(pet_breed):
+    """ 
+    Look in the database for pets who share the same breed with current pet.
     """
 
 
@@ -188,6 +164,47 @@ def suggest_pet(pet_breed):
     return petbreed_ids
 
 
+def pet_suggester(pet_id):
+    """ Suggest additional pets.
+    Look at current pet's breed, age, size, and find IDs of similar pets.
+    TODO: identify pet color and fur length, since they're not in XML returned by API.
+
+    Groupings other than exact match:
+           (Domestic Short Hair, American Shorthair)
+        (Maine Coon, Domestic Long Hair)
+    """
+
+    # Look up current pet's breed ids
+    pet_breed_ids = seed.get_pet_breeds(pet_id)
+
+    #unpack tuples into a list
+    breeds_list = [breed_id.breed_id for breed_id in pet_breed_ids]
+
+    suggested_pets = []
+    # Look up more pets who match those IDs 
+    for breed in breeds_list:
+        suggested_pets.append(breed_lookup(breed))
+
+    #flatten the list of suggested pet IDs
+    suggested_pet_list = set()
+
+    for lst in suggested_pets:
+        for item in lst:
+            suggested_pet_list.add(item.pet_id)
+
+    suggested_pet_list = list(suggested_pet_list)
+
+    # Remove current pet if it was suggested, and shorten list
+    suggested_pet_list.remove(pet_id)
+    suggested_pet_list = suggested_pet_list[:5]
+   
+    # look up full records of suggested pets in API
+    suggest_pets = []
+    for pet_id in suggested_pet_list:
+        pet = seed.get_api_pet(pet_id)
+        suggest_pets.append(pet['petfinder']['pet'])
+    
+    return suggest_pets
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')

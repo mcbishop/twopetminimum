@@ -62,13 +62,25 @@ def create_breed_object(breed):
 
 
 def get_breed_id(breed):
-    """ Function to return pet breed ID from database."""
+    """ Function to return breed ID from database."""
     sql = "SELECT breed_id FROM breeds WHERE breed_name = :name"
     cursor = db.session.execute(sql, {'name': breed})
     print "Looking up", breed
-    petbreed_id = cursor.fetchone()
+    breed_id = cursor.fetchone()
     print "***** Pet breed ID Is", petbreed_id[0]
-    return petbreed_id[0]
+    return breed_id[0]
+
+
+def get_pet_breeds(pet_id):
+    """ Function to return current pet breed(s) from database."""
+
+    sql = "SELECT breed_id FROM petbreeds WHERE petbreeds.pet_id = :pet_id"
+    cursor = db.session.execute(sql, {'pet_id' : pet_id})
+    print "looking up", pet_id
+    petbreed_ids = cursor.fetchall()
+    print "******** Pet breeds found are", petbreed_ids
+
+    return petbreed_ids 
 
 
 def create_petbreed_object(pet_entry, breed):
