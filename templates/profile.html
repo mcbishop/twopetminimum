@@ -5,7 +5,8 @@
     <link href="/static/styles.css" rel="stylesheet">
     <title>Two Cat Minimum</title>
 </head>
-<body style="background-color:#F0F8FF">
+
+<body class="body-bg-bw">
 <div class="container">
     <div class="row text-center">
         <div class="col-xs-12">
@@ -52,8 +53,11 @@
               </div><!--end carousel -->
     </div> <!--end row -->
 
-  <div class="row text-center">
-    <div class="col-sm-4 col-sm-offset-4">
+  <div class="row">
+    <br>
+    </div>
+       <div class="row text-center">
+    <div class="col-sm-4 col-sm-offset-4 text-container">
    
   
                 Name: {{ pet['name'] }} <br>
@@ -75,30 +79,42 @@
 
            </div>
          </div>
+
+  <div class="row">
+    <br>
+    </div>
          <div class="row text-center">
-          <div class="col-sm-8 col-sm-offset-2">
+          <div class="col-sm-8 col-sm-offset-2 text-container">
               {{ pet['description']}}<br>
               <br>
              
         </div>
     </div>
 
+  <div class="row">
+    <br>
+    </div>
  <div class="row">
    <div class="col-sm-8 col-sm-offset-2">
       <div id="map" style="height: 40%"></div>
-      <div id="address"> <b> Shelter address</b></br>
+      
+  <div class="row">
+    <br>
+    </div>
+        <div class="col-sm-8 col-sm-offset-2">
+      <div id="address" class="text-container text-center"> <b> Shelter address</b></br>
       {% if shelter['address1'] is not none %}
-      {{ shelter['name'] }} <br>
-      {{ shelter['address1']}} <br>
+      {{   shelter['name'] }} <br>
+      {{   shelter['address1']}} <br>
       {% endif %}
       {% if shelter['address2'] is not none %}
-      {{ shelter['address2']}} <br>
+      {{   shelter['address2']}} <br>
       {% endif %}
-      {{ shelter['city']}}, {{ shelter['state']}} {{ shelter['zip']}}
+      {{   shelter['city']}}, {{ shelter['state']}} {{ shelter['zip']}}
       <br>
-      {{ shelter['email']}} <br>
-      {{ shelter['phone']}}
-
+      {{   shelter['email']}} <br>
+      {{   shelter['phone']}}
+</div>
       </div>
     </div>
  </div>
@@ -201,5 +217,5 @@
 
 
 <!--     </div> -->
-</body>
+</body> 
 </html>
