@@ -3,25 +3,20 @@
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <!-- Custom styles for this template -->
     <link href="/static/styles.css" rel="stylesheet">
-
     <title>Two Cat Minimum</title>
 </head>
 <body>
 <div class="container">
-    <div class="row">
+    <div class="row text-center">
         <div class="col-xs-12">
             <div class="page-header">
                 <h1>{{pet['name']}} </h1>
             </div>
         </div>
     </div>
-</div>
-         
-            
-<div class="container"> 
      <div class="row">
-        <div class="col-xs-6 offset-3">
-            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel" style="width: 600px">
   <!-- Indicators -->
   <ol class="carousel-indicators">
     <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -57,14 +52,11 @@
               </div><!--end carousel -->
     </div> <!--end row -->
 
-  <div class="row">
-    <div class="col-xs-8 offset-4">
+  <div class="row text-center">
+    <div class="col-sm-4 col-sm-offset-4">
    
   
-             {{ pet['name'] }} <br>
-             {% if pet['lastupdate'] %}
-             {{ pet['lastupdate'] }}<br>
-             {% endif %}
+                Name: {{ pet['name'] }} <br>
              {% for breed in pet['breeds']['breed'] %}
                 {% if breed|length > 1 %}
                     {{ breed }}<br>
@@ -79,17 +71,24 @@
              Age: {{ pet['age']}} * 
              Gender: {{ pet['sex']}} *
              Size: {{ pet['size']}}<br>
-              {{ pet['description']}}<br>
+             <br>
 
+           </div>
+         </div>
+         <div class="row text-center">
+          <div class="col-sm-8 col-sm-offset-2">
+              {{ pet['description']}}<br>
+              <br>
              
         </div>
     </div>
 
  <div class="row">
-   <div class="col-xs-8 offset-4">
-      <div id="map" style="height: 25%"></div>
+   <div class="col-sm-8 col-sm-offset-2">
+      <div id="map" style="height: 40%"></div>
       <div id="address"> <b> Shelter address</b></br>
       {% if shelter['address1'] is not none %}
+      {{ shelter['name'] }} <br>
       {{ shelter['address1']}} <br>
       {% endif %}
       {% if shelter['address2'] is not none %}
@@ -103,10 +102,9 @@
       </div>
     </div>
  </div>
-  </div>
-  <div class="container"> 
+
     <div class="row">
-  
+    <br>
       {% for pet in suggested_pets %}
         <div class="col-xs-3" >
         {% if pet['media'] %}
@@ -153,7 +151,7 @@
         </div>
     </div>   
 </div>
-  </div>
+
 
 
     <script>
