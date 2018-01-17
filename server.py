@@ -115,17 +115,12 @@ def display_shelter_pets():
 @app.route('/text', methods=['POST'])
 def call():
     # Get phone number we need to call
-    print "*********"
-    print "Made it into twilio text route"
 
-    print "*********"
-    print request.form
     phone_number = request.form.get('phoneNumber')
     pet_photo = request.form.get('photo_url')
-    pet_id = request.form.get('pet_id')
+    pet_id = session['pet_id']
 
-    url = "http://www.twocatminimum.com/pet/"+pet_id
-
+    url = "http://www.twocatminimum.com/pet/"+str(pet_id)
 
     try:
         twilio_client = Client(app.config['TWILIO_ACCOUNT_SID'],
@@ -145,7 +140,7 @@ def call():
         app.logger.error(e)
         return jsonify({'error': str(e)})
 
-    return redirect('/pet/'+str(session['pet_id']))
+    return jsonify({'message': 'Text incoming!'})
 
 ####### HELPER FUNCTIONS ########
 

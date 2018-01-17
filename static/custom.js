@@ -14,10 +14,38 @@ function getPetInfo(evt) {
             $('#div_' + pet_id).html(pet_desc);
         });
 }
+ // Below code is from combined Twilio tutorials, https://github.com/TwilioDevEd/clicktocall-flask/
 
-$('.button').click(getPetInfo);
+// Execute JavaScript on page load
+$(function() {
+    // Intercept form submission and submit the form with ajax
+    $('#contactForm').on('submit', function(e) {
+        // Prevent submit event from bubbling and automatically
+        // submitting the form
+        e.preventDefault();
 
-/*$('.img-thumbnail').hover(showBorder);*/
+        // Call our ajax endpoint on the server to initialize the
+        // text message
+        $.ajax({
+            url: '/text',
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                phoneNumber: $('#phoneNumber').val(),
+                photo_url: $('#photo_url').val()
+            }
+        }).done(function(data) {
+            // The JSON sent back from the server will contain
+            // a success message
+            alert(data.message);
+        }).fail(function(error) {
+            alert(JSON.stringify(error));
+        });
+    });
+});
+// $('.button').click(getPetInfo);
+
+
 
 
 

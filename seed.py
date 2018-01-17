@@ -67,7 +67,7 @@ def get_breed_id(breed):
     cursor = db.session.execute(sql, {'name': breed})
     print "Looking up", breed
     breed_id = cursor.fetchone()
-    print "***** Pet breed ID Is", petbreed_id[0]
+    print "***** Pet breed ID Is", breed_id[0]
     return breed_id[0]
 
 
