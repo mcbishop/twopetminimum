@@ -9,7 +9,7 @@ The Petfinder website lists adoptable pets from an assortment of shelters and re
 I also suggest similar cat pairs based on the listing currently viewed, and allow users to text a listing to their phone using Twilio's API. 
 
 
-Tech stack: Python, JavaScript, AJAX, Flask, Postgres, SqlAlchemy
+Tech stack: Python, JavaScript, AJAX, Flask, Postgres, SQLAlchemy
 APIs: Petfinder, Twilio, Google Maps
 
 ![screen shot 2018-01-18 at 6 11 23 pm](https://user-images.githubusercontent.com/810585/35131925-95b8af08-fc7d-11e7-80e3-f0d834d4d6d0.png)
