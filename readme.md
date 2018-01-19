@@ -12,12 +12,9 @@ I also suggest similar cat pairs based on the listing currently viewed, and allo
 Tech stack: Python, JavaScript, AJAX, Flask, Postgres, SQLAlchemy
 APIs: Petfinder, Twilio, Google Maps
 
-![screen shot 2018-01-18 at 6 11 23 pm](https://user-images.githubusercontent.com/810585/35131925-95b8af08-fc7d-11e7-80e3-f0d834d4d6d0.png)
-
-![screen shot 2018-01-18 at 6 11 47 pm](https://user-images.githubusercontent.com/810585/35131842-42eb4cae-fc7d-11e7-9989-ec709b5150fc.png)
-![screen shot 2018-01-18 at 6 12 04 pm](https://user-images.githubusercontent.com/810585/35131841-42cfc3a8-fc7d-11e7-83b5-4d425bb21352.png)
-
-![screen shot 2018-01-18 at 6 12 13 pm](https://user-images.githubusercontent.com/810585/35131840-42b36064-fc7d-11e7-8c01-6918c2a3c38b.png)
+![screen shot 2018-01-19 at 3 51 38 pm](https://user-images.githubusercontent.com/810585/35176988-53a4fea0-fd31-11e7-9d10-ff378cd5db2a.png)
+![screen shot 2018-01-19 at 3 52 13 pm](https://user-images.githubusercontent.com/810585/35176989-53bdce6c-fd31-11e7-93c1-45bc335091dc.png)
+![screen shot 2018-01-19 at 3 52 39 pm](https://user-images.githubusercontent.com/810585/35176990-53d33dd8-fd31-11e7-9bb9-d3373026c851.png)
 
 
 
