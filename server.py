@@ -1,7 +1,7 @@
 from flask import Flask, request, redirect, session, render_template, jsonify, url_for
 from flask_googlemaps import GoogleMaps, Map
 from flask.ext.sqlalchemy import SQLAlchemy
-from model import Pet, Shelter, Photo, connect_to_db, db
+from model import Pet, Shelter, Photo, Breed, PetBreed, connect_to_db, db
 import seed
 import json
 from twilio.rest import Client
@@ -141,6 +141,7 @@ def call():
         return jsonify({'error': str(e)})
 
     return jsonify({'message': 'Text incoming!'})
+# end of code from https://github.com/TwilioDevEd/clicktocall-flask/
 
 ####### HELPER FUNCTIONS ########
 
@@ -148,14 +149,13 @@ def call():
 def breed_lookup(pet_breed):
     """ 
     Look in the database for pets who share the same breed with current pet.
+
     """
+    
+    query = db.session.query(Pet.pet_name, 
+                            Pet.pet_id).join(PetBreed).filter(PetBreed.breed_id==pet_breed).all()
 
-
-    sql = "SELECT pet_id FROM petbreeds WHERE petbreeds.breed_id = :name"
-
-    cursor = db.session.execute(sql, {'name': pet_breed})
-    petbreed_ids = cursor.fetchall()
-    return petbreed_ids
+    return query
 
 
 def pet_suggester(pet_id):
@@ -192,7 +192,8 @@ def pet_suggester(pet_id):
     suggested_pet_list.remove(pet_id)
     suggested_pet_list = suggested_pet_list[:4]
    
-    # look up full records of suggested pets in API
+    # look up photo and ID of suggested pets in API.
+
     suggest_pets = []
     for pet_id in suggested_pet_list:
         pet = seed.get_api_pet(pet_id)

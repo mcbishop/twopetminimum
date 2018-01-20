@@ -45,8 +45,10 @@ class Pet(db.Model):
 
     photo = db.relationship('Photo', backref="pets")
 
+
     def __repr__(self):
         return "<Pet name =  {} >".format(self.pet_name.encode('ascii', 'ignore').decode('ascii'))
+
 
 class PetBreed(db.Model):
     """ A table for Pets. Each pet can have multiple breeds."""
@@ -60,6 +62,7 @@ class PetBreed(db.Model):
 
     breed = db.relationship('Breed', backref="petbreeds")
 
+
 class Breed(db.Model):
     """ A table for Breeds."""
 
@@ -67,6 +70,7 @@ class Breed(db.Model):
     
     breed_id = db.Column(db.Integer, primary_key=True)
     breed_name = db.Column(db.String(100))
+
 
 class Photo(db.Model):
     """A table for Pet photos. Each pet has many photos."""
