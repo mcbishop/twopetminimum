@@ -1,0 +1,61 @@
+#map {
+    height: 100%;
+}
+
+.body {
+    background-color:#F0F8FF
+}
+
+.img-thumbnail {
+    width:100%;
+}
+
+.img-thumbnail:hover {
+    border-style: solid;
+    border-color: #92a8d1;
+    border-width: thin;
+    border-radius: 50%;
+}
+
+
+.carousel-inner > .item > img, .carousel-inner > .item > a > img {
+    width: 100%;
+    margin: 0 auto;
+}
+
+
+.body-bg {
+    background-image: url("/static/wool_blur.jpg");
+    background-color: #cccccc;
+
+}
+
+.body-bg-bw {
+    background-image: url("/static/wool_blur_bw.jpg");
+    background-color: #cccccc;
+
+}
+
+.blur {
+    -webkit-filter: blur(5px); /* Safari */
+    filter: blur(5px);
+}
+
+.text-container{
+    background-color: #cccccc;
+    border-style: solid;
+    border-color: #92a8d1;
+    border-width: thick;
+    border-radius: 25px;
+
+}
+
+p {
+    font-family: "Arial", Helvetica, sans-serif
+}
+
+h1 {
+    color: white;
+}
+
+
