@@ -1,5 +1,4 @@
-from flask import Flask, request, redirect, session, render_template, jsonify, url_for
-from flask_googlemaps import GoogleMaps, Map
+from flask import Flask, request, redirect, session, render_template, jsonify
 from flask.ext.sqlalchemy import SQLAlchemy
 from model import Pet, Shelter, Photo, Breed, PetBreed, connect_to_db, db
 import seed
