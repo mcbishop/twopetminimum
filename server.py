@@ -119,7 +119,7 @@ def call():
     pet_photo = request.form.get('photo_url')
     pet_id = session['pet_id']
 
-    url = "http://www.twocatminimum.com/pet/"+str(pet_id)
+    url = "http://www.2catminimum.com/pet/"+str(pet_id)
 
     try:
         twilio_client = Client(app.config['TWILIO_ACCOUNT_SID'],
