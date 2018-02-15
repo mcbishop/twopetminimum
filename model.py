@@ -78,7 +78,7 @@ class Photo(db.Model):
     __tablename__ = 'photos'
 
     photo_id = db.Column(db.Integer, primary_key=True)
-    pet_id = db.Column(db.Integer, db. ForeignKey('pets.pet_id'))
+    pet_id = db.Column(db.Integer, db.ForeignKey('pets.pet_id'))
     pf_id = db.Column(db.String(5))
     photo_size = db.Column(db.String(5))
     photo_text = db.Column(db.String(200))

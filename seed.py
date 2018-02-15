@@ -107,6 +107,19 @@ def load_shelters(all_shelters):
 
 def load_pets(all_pets):
     """ Validate sibling mention in pet names. Load responsive pets into database."""
+    # First, clear any previous seeding.
+    Photo.query.delete()
+    PetBreed.query.delete()
+    Breed.query.delete()
+    Shelter.query.delete()
+
+    # Commit, in order to clear pet records
+    db.session.commit()
+    
+    Pet.query.delete()
+    
+    
+
     pair_phrases = ["and", "&", "brother", "sister", "sibling", "bonded", "pair"]
     for pet_dict in all_pets['petfinder']['pets'].values():
         for pet in pet_dict:
