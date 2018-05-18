@@ -46,29 +46,23 @@ def search():
 @app.route('/pet/<int:pet_id>')
 def display_pet(pet_id):
     """ Display individual pet, along with suggested pets based on similarity."""
-
     pet = seed.get_api_pet(pet_id)
 
     session['pet_id'] = pet_id
 
-    print "************"
-    print "pet is", pet['petfinder']['pet']['name']
+    try:
+        pet = pet['petfinder']['pet']
 
+        shelter = seed.get_api_shelter(pet['shelterId'])
 
-    pet = pet['petfinder']['pet']
+        shelter = shelter['petfinder']['shelter']
+        
+        suggested_pets = pet_suggester(pet_id)
 
-    shelter = seed.get_api_shelter(pet['shelterId'])
+        return render_template("profile.html", pet=pet, shelter=shelter, google_key=google_key, suggested_pets=suggested_pets)
 
-    print "shelter is", shelter['petfinder']['shelter']['name']
-
-    shelter = shelter['petfinder']['shelter']
-    
-    suggested_pets = pet_suggester(pet_id)
-
-
-    return render_template("profile.html", pet=pet, shelter=shelter, google_key=google_key, suggested_pets=suggested_pets)
-
-
+    except KeyError:
+        return redirect('/search')
 
 @app.route('/pet.json')
 def display_pet_json():
@@ -88,19 +82,11 @@ def display_shelter():
     """ Display shelter info."""
 
     shelter_id = request.args.get("shelter_id")
-    print "&&&&&&&&&&&&& SHELTER ROUTE &&&&&&&&&&&&&"
-    print shelter_id
-    print "&&&&&&&&&&&&&"
 
     shelter = seed.get_api_shelter(shelter_id)
 
     shelter = shelter['petfinder']['shelter']
 
-    print shelter
-
-    print "#########################"
-
-    return jsonify(shelter)
 
 @app.route('/shelters')
 def display_shelter_pets():
