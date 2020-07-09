@@ -1,11 +1,15 @@
+from __future__ import unicode_literals
+
 from flask import Flask, request, redirect, session, render_template, jsonify
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
+
 from model import Pet, Shelter, Photo, Breed, PetBreed, connect_to_db, db
 import seed
 import json
 from twilio.rest import Client
 
 import os
+
 google_key = os.environ['GOOGLE_SECRET']
 
 
@@ -13,6 +17,7 @@ google_key = os.environ['GOOGLE_SECRET']
 app = Flask(__name__, static_url_path='/static')
 app.config.from_pyfile('local_settings.py')
 
+# -*- coding: utf-8 -*-
 # set the secret key. 
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
@@ -52,6 +57,8 @@ def display_pet(pet_id):
 
     try:
         pet = pet['petfinder']['pet']
+        var = pet['description']
+        print "pet description:", var
 
         shelter = seed.get_api_shelter(pet['shelterId'])
 
@@ -100,7 +107,6 @@ def display_shelter_pets():
 @app.route('/text', methods=['POST'])
 def call():
     # Get phone number we need to call
-
     phone_number = request.form.get('phoneNumber')
     pet_photo = request.form.get('photo_url')
     pet_id = session['pet_id']
@@ -187,7 +193,7 @@ def pet_suggester(pet_id):
     return suggest_pets
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=True)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     connect_to_db(app)
 

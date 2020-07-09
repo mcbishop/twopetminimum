@@ -19,12 +19,25 @@ def create_shelter_object(shelter):
 
 
 def create_pet_object(pet_entry):
-    """ Take pet attributes out of dictionary content and instantiate a Pet object."""
-    new_pet = Pet(pet_id = pet_entry['id'],
-                  shelter_id=pet_entry['shelterId'], 
-                  pet_name=pet_entry['name'].encode('utf-8'), 
-                  pet_description=pet_entry['description'].encode('utf-8'),
-                  lastupdate=pet_entry['lastUpdate'].encode('utf-8'), 
+    """
+    :param pet_entry: ordered dictionary JSON object containing pet attributes.
+    Assumes keys will be present:
+    pet_id
+    shelter_id
+    lastUpdate
+    pet_type
+
+    Checks for content in description, which is optional.
+
+    Takes pet attributes out of dictionary content and instantiates a Pet object."""
+
+    pet_description = pet_entry['description'] if pet_entry['description'] is not None else 'No description provided'
+
+    new_pet = Pet(pet_id=pet_entry['id'],
+                  shelter_id=pet_entry['shelterId'],
+                  pet_name=pet_entry['name'].encode('utf-8'),
+                  pet_description=pet_description.encode('utf-8'),
+                  lastupdate=pet_entry['lastUpdate'].encode('utf-8'),
                   pet_type=pet_entry['animal'].encode('utf-8'))
     db.session.add(new_pet)
     db.session.commit()
