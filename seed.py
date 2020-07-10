@@ -24,24 +24,21 @@ def create_pet_object(pet_entry):
     Assumes keys will be present:
     pet_id
     shelter_id
-    lastUpdate
+    lastUpdated
     pet_type
-
-    Checks for content in description, which is optional.
+    description
 
     Takes pet attributes out of dictionary content and instantiates a Pet object."""
-
-    pet_description = pet_entry['description'] if pet_entry['description'] is not None else 'No description provided'
-
     new_pet = Pet(pet_id=pet_entry['id'],
                   shelter_id=pet_entry['shelterId'],
                   pet_name=pet_entry['name'].encode('utf-8'),
-                  pet_description=pet_description.encode('utf-8'),
+                  pet_description=pet_entry['description'].encode('utf-8'),
                   lastupdate=pet_entry['lastUpdate'].encode('utf-8'),
                   pet_type=pet_entry['animal'].encode('utf-8'))
     db.session.add(new_pet)
     db.session.commit()
     print "Added a Pet!"
+
 
 def create_photo_object(pet_entry, photo_entry):
     """Take photo attributes out of pet mini-dictionary and instantiate a Photo object."""
@@ -137,37 +134,34 @@ def load_pets(all_pets):
     for pet_dict in all_pets['petfinder']['pets'].values():
         for pet in pet_dict:
             # If pet name includes possible sibling, make a dictionary entry
-            if search.is_possible_sibling(pet['name'], pair_phrases):
-                create_pet_object(pet)
-            # If pet record contains photos, add a link to predetermined size photo.
-                if pet['media']:
-                    # Load links to one "l" photo for each pet.
-                    if pet['media']['photos']['photo']:
-                        photo_exists = False
-                        for photo_record in pet['media']['photos']['photo']:
-                            if photo_record['@size'] == 'x':
-                                if photo_exists == False:
-                                    create_photo_object(pet, photo_record)
-                                    photo_exists = True
-            # Load breeds associated with each pet. 
-                if pet['breeds']:
-                    # Create a new breed if it's not in the db already.
-                    created_solo_breed = False
-                    for breed in pet['breeds']['breed']:
-                        # Pet could have one breed or a list of breeds.
-                        if len(breed) > 1:
-                            create_breed_object(breed)
-                            create_petbreed_object(pet, breed)
-                        else:
-                            while created_solo_breed is False:
-                                create_breed_object(pet['breeds']['breed'])
-                                create_petbreed_object(pet, pet['breeds']['breed'])
-                                created_solo_breed = True
-                        
-                        
-
-
-
+            if pet['description'] is not None:
+                if search.is_possible_sibling(pet['name'], pair_phrases):
+                    create_pet_object(pet)
+                # If pet record contains photos, add a link to predetermined size photo.
+                    if pet['media']:
+                        # Load links to one "l" photo for each pet.
+                        if pet['media']['photos']['photo']:
+                            photo_exists = False
+                            for photo_record in pet['media']['photos']['photo']:
+                                if photo_record['@size'] == 'x':
+                                    if photo_exists == False:
+                                        create_photo_object(pet, photo_record)
+                                        photo_exists = True
+                # Load breeds associated with each pet. 
+                    if pet['breeds']:
+                        # Create a new breed if it's not in the db already.
+                        created_solo_breed = False
+                        for breed in pet['breeds']['breed']:
+                            # Pet could have one breed or a list of breeds.
+                            if len(breed) > 1:
+                                create_breed_object(breed)
+                                create_petbreed_object(pet, breed)
+                            else:
+                                while created_solo_breed is False:
+                                    create_breed_object(pet['breeds']['breed'])
+                                    create_petbreed_object(pet, pet['breeds']['breed'])
+                                    created_solo_breed = True
+                            
 
 
  
