@@ -58,7 +58,6 @@ def display_pet(pet_id):
     try:
         pet = pet['petfinder']['pet']
         var = pet['description']
-        print "pet description:", var
 
         shelter = seed.get_api_shelter(pet['shelterId'])
 
@@ -194,6 +193,6 @@ def pet_suggester(pet_id):
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     connect_to_db(app)
 
