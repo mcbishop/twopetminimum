@@ -1,8 +1,11 @@
+from __future__ import unicode_literals
 from model import Pet, Shelter, Photo, Breed, PetBreed, connect_to_db, db
-import search
 import os
 import requests
+import search
 import xmltodict
+
+# encoding=utf8
 
 """ Seed database with data from API call."""
 
@@ -29,6 +32,7 @@ def create_pet_object(pet_entry):
     description
 
     Takes pet attributes out of dictionary content and instantiates a Pet object."""
+
     new_pet = Pet(pet_id=pet_entry['id'],
                   shelter_id=pet_entry['shelterId'],
                   pet_name=pet_entry['name'].encode('utf-8'),
