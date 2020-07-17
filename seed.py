@@ -89,10 +89,7 @@ def get_pet_breeds(pet_id):
 
     sql = "SELECT breed_id FROM petbreeds WHERE petbreeds.pet_id = :pet_id"
     cursor = db.session.execute(sql, {'pet_id' : pet_id})
-    print("looking up", pet_id)
     petbreed_ids = cursor.fetchall()
-    print("******** Pet breeds found are", petbreed_ids)
-
     return petbreed_ids 
 
 

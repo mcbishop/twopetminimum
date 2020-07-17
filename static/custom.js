@@ -1,16 +1,10 @@
 
 function getPetInfo(evt) {
-    console.log(evt);
     var pet_id = $(this).data('pet-id');
-    console.log("Pet ID is", pet_id);
-
     $.get("/pet.json", {'pet_id':pet_id},
         function(results) {
-            console.log("Made it! Results are", results);
             var pet_id = results.id;
-            var pet_desc = results.description;
-            console.log(pet_desc);
-            
+            var pet_desc = results.description;            
             $('#div_' + pet_id).html(pet_desc);
         });
 }
@@ -24,7 +18,7 @@ $(function() {
         // submitting the form
         e.preventDefault();
 
-        // Call our ajax endpoint on the server to initialize the
+        // Call AJAX endpoint on the server to initialize the
         // text message
         $.ajax({
             url: '/text',

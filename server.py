@@ -42,10 +42,6 @@ def search():
                                Photo.photo_size).join(Photo).all()
 
 
-    #todo: get current date from python, query DB for lastupdate within a date range
-    # for pet in pet_results:
-    #     print(pet.pet_name)
-    #     print(pet.pet_description)
     return render_template("search.html", pet_results=pet_results)
 
 
@@ -125,7 +121,6 @@ def call():
                                    to=phone_number,
                                    body="Visit me! "+ url,
                                    media_url=pet_photo)
-        print((message.sid))
 
     except Exception as e:
         app.logger.error(e)

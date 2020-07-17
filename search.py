@@ -87,8 +87,6 @@ def all_pet_results(all_pets, phrases):
             # If pet name includes possible sibling, make a dictionary entry
             if is_possible_sibling(pet['name'], phrases):
                 pet_names[pet['name']] = []
-                # If description includes affection keywords, append dictionary value
-                # if is_affectionate(pet['description']):
                 pet_names[pet['name']] = [pet['description']]  
         print(len(pet_names))
         return pet_names
