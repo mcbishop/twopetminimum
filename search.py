@@ -82,7 +82,7 @@ def possible_friend_name(phrase):
 
 def all_pet_results(all_pets, phrases):
     pet_names = {}
-    for pet_dict in all_pets['petfinder']['pets'].values():
+    for pet_dict in list(all_pets['petfinder']['pets'].values()):
         for pet in pet_dict:
             # If pet name includes possible sibling, make a dictionary entry
             if is_possible_sibling(pet['name'], phrases):
@@ -90,7 +90,7 @@ def all_pet_results(all_pets, phrases):
                 # If description includes affection keywords, append dictionary value
                 # if is_affectionate(pet['description']):
                 pet_names[pet['name']] = [pet['description']]  
-        print len(pet_names)
+        print(len(pet_names))
         return pet_names
     
 
@@ -116,7 +116,7 @@ def is_affectionate(text):
 def word_frequency(all_pets):
     """Input: dictionary including subdictionary for each pet, output: word frequency in descriptions."""
     word_counts = {}
-    for pet_dict in all_pets['petfinder']['pets'].values():
+    for pet_dict in list(all_pets['petfinder']['pets'].values()):
         for pet in pet_dict:
             if pet['description']:
                 for word in pet['description'].split():
@@ -130,7 +130,7 @@ def word_frequency(all_pets):
 def top_words(word_counts):
     """ Input: dictionary of words and counts. Output: list of top words, sorted by value."""
     all_values = {}
-    for key, value in word_counts.items():
+    for key, value in list(word_counts.items()):
         if value not in all_values:
             all_values[value] = [key]
         else:
@@ -149,7 +149,7 @@ def write_desc(all_pets):
     including descriptions as one long string. Output: None."""
 
     with open("descriptions.txt", "w") as f:
-        for pet_dict in all_pets['petfinder']['pets'].values():
+        for pet_dict in list(all_pets['petfinder']['pets'].values()):
             for pet in pet_dict:
                 if pet['description']:
                     list_desc = pet['description']

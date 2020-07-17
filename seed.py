@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 from model import Pet, Shelter, Photo, Breed, PetBreed, connect_to_db, db
 import os
 import requests
@@ -27,21 +27,20 @@ def create_pet_object(pet_entry):
     Assumes keys will be present:
     pet_id
     shelter_id
-    lastUpdated
+    lastUpdate
     pet_type
     description
 
     Takes pet attributes out of dictionary content and instantiates a Pet object."""
-
     new_pet = Pet(pet_id=pet_entry['id'],
                   shelter_id=pet_entry['shelterId'],
-                  pet_name=pet_entry['name'].encode('utf-8'),
-                  pet_description=pet_entry['description'].encode('utf-8'),
-                  lastupdate=pet_entry['lastUpdate'].encode('utf-8'),
-                  pet_type=pet_entry['animal'].encode('utf-8'))
+                  pet_name=pet_entry['name'],
+                  last_update=pet_entry['lastUpdate'],
+                  pet_description=pet_entry['description'],
+                  pet_type=pet_entry['animal'])
     db.session.add(new_pet)
     db.session.commit()
-    print "Added a Pet!"
+    print("Added a Pet!")
 
 
 def create_photo_object(pet_entry, photo_entry):
@@ -55,7 +54,7 @@ def create_photo_object(pet_entry, photo_entry):
                       photo_text=photo_entry['#text'])
     db.session.add(new_photo)
 
-    print "Loaded Photos."
+    print("Loaded Photos.")
 
 def create_breed_object(breed):
     """ Check DB to see if there's a breed record. If not, make a new breed and get its id.
@@ -72,16 +71,16 @@ def create_breed_object(breed):
         new_breed = Breed(breed_name=breed)
         db.session.add(new_breed)
         db.session.commit()
-        print "Added new Breed"
+        print("Added new Breed")
 
 
 def get_breed_id(breed):
     """ Function to return breed ID from database."""
     sql = "SELECT breed_id FROM breeds WHERE breed_name = :name"
     cursor = db.session.execute(sql, {'name': breed})
-    print "Looking up", breed
+    print("Looking up", breed)
     breed_id = cursor.fetchone()
-    print "***** Pet breed ID Is", breed_id[0]
+    print("***** Pet breed ID Is", breed_id[0])
     return breed_id[0]
 
 
@@ -90,9 +89,9 @@ def get_pet_breeds(pet_id):
 
     sql = "SELECT breed_id FROM petbreeds WHERE petbreeds.pet_id = :pet_id"
     cursor = db.session.execute(sql, {'pet_id' : pet_id})
-    print "looking up", pet_id
+    print("looking up", pet_id)
     petbreed_ids = cursor.fetchall()
-    print "******** Pet breeds found are", petbreed_ids
+    print("******** Pet breeds found are", petbreed_ids)
 
     return petbreed_ids 
 
@@ -108,7 +107,7 @@ def create_petbreed_object(pet_entry, breed):
 
     db.session.add(new_petbreed)
 
-    print "Loaded a Pet's Breeds."
+    print("Loaded a Pet's Breeds.")
 
 def load_shelters(all_shelters):
     """Get shelter data for nearby shelters from dictionary. Add shelters to db."""
@@ -116,7 +115,7 @@ def load_shelters(all_shelters):
         new_shelter = create_shelter_object(shelter_dict)
     db.session.add(new_shelter)
 
-    print "Loaded Shelters."
+    print("Loaded Shelters.")
 
 
 def load_pets(all_pets):
@@ -135,7 +134,7 @@ def load_pets(all_pets):
     
 
     pair_phrases = ["and", "&", "brother", "sister", "sibling", "bonded", "pair"]
-    for pet_dict in all_pets['petfinder']['pets'].values():
+    for pet_dict in list(all_pets['petfinder']['pets'].values()):
         for pet in pet_dict:
             # If pet name includes possible sibling, make a dictionary entry
             if pet['description'] is not None:
