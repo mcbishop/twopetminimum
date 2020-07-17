@@ -39,7 +39,7 @@ class Pet(db.Model):
     pet_breed = db.Column(db.String(100))
     pet_description = db.Column(db.Text)
     pet_type = db.Column(db.String(50))
-    lastupdate = db.Column(db.DateTime)
+    last_update = db.Column(db.DateTime)
 
     # shelter = db.relationship('Shelter', backref='pets')
 
